@@ -1,13 +1,17 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.repo.CommentRepo;
 import com.studheupno.sqsbackend.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -15,6 +19,8 @@ public class MessageService {
 
     @Autowired
     private MessageRepo messageRepo;
+    @Autowired
+    private CommentRepo commentRepo;
 
     public ResponseObjectEntity insertMessage(MessageEntity inputPost) {
         ResponseObjectEntity responseObj = new ResponseObjectEntity();
@@ -37,6 +43,34 @@ public class MessageService {
             responseObj.setStatus("success");
             responseObj.setMessage("success");
             responseObj.setPayload(messages);
+        }
+        return responseObj;
+    }
+
+    public ResponseObjectEntity updateMessageByComment(String inputMessageId, CommentEntity inputComment) {
+        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+        Optional<MessageEntity> optPost = messageRepo.findById(inputMessageId);
+
+        if (optPost.isEmpty()) {
+            responseObj.setStatus("fail");
+            responseObj.setMessage("cannot find message with id: " + inputMessageId);
+            responseObj.setPayload(null);
+        } else {
+            inputComment.setCreatedAt(Instant.now());
+            commentRepo.save(inputComment);
+
+            MessageEntity targetMessage = optPost.get();
+            List<CommentEntity> commentList = targetMessage.getComments();
+            if (commentList == null) {
+                commentList = new ArrayList<>();
+            }
+            commentList.add(inputComment);
+            targetMessage.setComments(commentList);
+            messageRepo.save(targetMessage);
+
+            responseObj.setStatus("success");
+            responseObj.setMessage("message was updated successfully");
+            responseObj.setPayload(targetMessage);
         }
         return responseObj;
     }

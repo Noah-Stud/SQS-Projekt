@@ -29,5 +29,5 @@ public class MessageEntity {
 
     List<String> likes = new ArrayList<>();
 
-    List<CommentEntity> comment = new ArrayList<>();
+    List<CommentEntity> comments = new ArrayList<>();
 }
