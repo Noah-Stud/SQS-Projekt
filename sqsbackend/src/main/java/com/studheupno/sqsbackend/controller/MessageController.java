@@ -1,0 +1,33 @@
+package com.studheupno.sqsbackend.controller;
+
+import com.studheupno.sqsbackend.entity.MessageEntity;
+import com.studheupno.sqsbackend.service.MessageService;
+import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping("/api/v1")
+public class MessageController {
+
+    @Autowired
+    private MessageService messageService;
+
+    @PostMapping("/insertmessage")
+    public ResponseEntity<ResponseObjectEntity> insertPost(@RequestBody MessageEntity inputPost) {
+        return new ResponseEntity<>(messageService.insertMessage(inputPost), HttpStatus.OK);
+    }
+
+    @GetMapping("/messages")
+    public ResponseEntity<ResponseObjectEntity> getAllMessages() {
+        return new ResponseEntity<>(messageService.getAllMessages(), HttpStatus.OK);
+    }
+}

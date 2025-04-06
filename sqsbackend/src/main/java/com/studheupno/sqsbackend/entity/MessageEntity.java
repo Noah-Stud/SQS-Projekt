@@ -27,7 +27,7 @@ public class MessageEntity {
 
     private Instant createdAt;
 
-    List<String> like = new ArrayList<>();
+    List<String> likes = new ArrayList<>();
 
     List<CommentEntity> comment = new ArrayList<>();
 }
