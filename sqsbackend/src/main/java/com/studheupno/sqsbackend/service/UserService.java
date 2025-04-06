@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.entity.UserEntity;
 
@@ -22,16 +23,16 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
-    public ResponseObjectService findAll() {
-        ResponseObjectService responseObj = new ResponseObjectService();
+    public ResponseObjectEntity findAll() {
+        ResponseObjectEntity responseObj = new ResponseObjectEntity();
         responseObj.setPayload(userRepo.findAll());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
         return responseObj;
     }
 
-    public ResponseObjectService findById(String id) {
-        ResponseObjectService responseObj = new ResponseObjectService();
+    public ResponseObjectEntity findById(String id) {
+        ResponseObjectEntity responseObj = new ResponseObjectEntity();
         Optional<UserEntity> optUser = userRepo.findById(id);
 
         if (optUser.isEmpty()) {
@@ -46,8 +47,8 @@ public class UserService implements UserDetailsService {
         return responseObj;
     }
 
-    public ResponseObjectService saveUser(UserEntity inputUser) {
-        ResponseObjectService responseObj = new ResponseObjectService();
+    public ResponseObjectEntity saveUser(UserEntity inputUser) {
+        ResponseObjectEntity responseObj = new ResponseObjectEntity();
         Optional<UserEntity> optUser = userRepo.findByEmail(inputUser.getEmail());
 
         if (optUser.isPresent()) {
