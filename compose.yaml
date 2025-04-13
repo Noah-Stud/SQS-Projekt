@@ -1,3 +1,3 @@
 include:
-   - sqsbackend/backendsqs.yaml
-   - db.yaml
+  - db.yaml
+  - sqsbackend/backendsqs.yaml

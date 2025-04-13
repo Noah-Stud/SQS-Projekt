@@ -3,3 +3,13 @@ services:
     image: mongo
     ports:
       - 27017:27017
+    volumes:
+      - type: bind
+        source: volumes/mongodb-dat-db
+        target: /data/db
+      - type: bind
+        source: volumes/mongodb-dat-conf
+        target: /data/configdb
+      - type: bind
+        source: volumes/mongodb-logt
+        target: /var/log/mongodb
