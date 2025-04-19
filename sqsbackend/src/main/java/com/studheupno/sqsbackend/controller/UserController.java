@@ -20,8 +20,8 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<ResponseObjectEntity> findById(@RequestBody String inputId) {
-        return new ResponseEntity<>(userService.findById(inputId), HttpStatus.OK);
+    @GetMapping("/user/findByEmail")
+    public ResponseEntity<ResponseObjectEntity> findById(@RequestBody String inputEmail) {
+        return new ResponseEntity<>(userService.findByEmail(inputEmail), HttpStatus.OK);
     }
 }

@@ -1,12 +1,12 @@
 package com.studheupno.sqsbackend.entity.requests;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponseObjectEntity {
     private String status;
     private String message;

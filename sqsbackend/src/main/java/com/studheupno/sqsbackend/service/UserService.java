@@ -3,6 +3,7 @@ package com.studheupno.sqsbackend.service;
 import java.util.Optional;
 
 import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.entity.requests.UserRequestResponse;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.entity.UserEntity;
 
@@ -27,16 +28,16 @@ public class UserService implements UserDetailsService {
         return responseObj;
     }
 
-    public ResponseObjectEntity findById(String id) {
+    public ResponseObjectEntity findByEmail(String email) {
         ResponseObjectEntity responseObj = new ResponseObjectEntity();
-        Optional<UserEntity> optUser = userRepo.findById(id);
+        Optional<UserEntity> optUser = userRepo.findByEmail(email);
 
         if (optUser.isEmpty()) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("user id: " + id + " does no exist");
+            responseObj.setMessage("user id: " + email + " does no exist");
             responseObj.setPayload(null);
         } else {
-            responseObj.setPayload(optUser.get());
+            responseObj.setPayload(new UserRequestResponse(optUser.get()));
             responseObj.setStatus("success");
             responseObj.setMessage("success");
         }
