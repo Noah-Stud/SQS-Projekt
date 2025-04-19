@@ -1,16 +1,12 @@
 package com.studheupno.sqsbackend.service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.entity.UserEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -72,10 +68,10 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Cannot find user with email: " + email);
         } else {
             UserEntity foundUser = optUser.get();
-            String role = foundUser.getRole();
-            Set<GrantedAuthority> ga = new HashSet<>();
-            ga.add(new SimpleGrantedAuthority(role));
-            return new User(foundUser.getEmail(), foundUser.getPassword(), ga);
+//            String role = foundUser.getRole();
+//            Set<GrantedAuthority> ga = new HashSet<>();
+//            ga.add(new SimpleGrantedAuthority(role));
+            return new User(foundUser.getEmail(), foundUser.getPassword(), foundUser.getAuthorities());
         }
     }
 }

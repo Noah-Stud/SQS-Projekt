@@ -1,6 +1,5 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
 import com.studheupno.sqsbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,5 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<ResponseObjectEntity> findById(@RequestBody String inputId) {
         return new ResponseEntity<>(userService.findById(inputId), HttpStatus.OK);
-    }
-
-    @PostMapping("/user/save")
-    public ResponseEntity<ResponseObjectEntity> saveUser(@RequestBody UserEntity inputUser) {
-        return new ResponseEntity<ResponseObjectEntity>(userService.saveUser(inputUser), HttpStatus.OK);
     }
 }
