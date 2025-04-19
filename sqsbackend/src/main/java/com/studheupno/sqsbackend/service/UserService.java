@@ -43,23 +43,6 @@ public class UserService implements UserDetailsService {
         return responseObj;
     }
 
-    public ResponseObjectEntity saveUser(UserEntity inputUser) {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
-        Optional<UserEntity> optUser = userRepo.findByEmail(inputUser.getEmail());
-
-        if (optUser.isPresent()) {
-            responseObj.setStatus("fail");
-            responseObj.setMessage("Email address " + inputUser.getEmail() + " already existed");
-            responseObj.setPayload(null);
-        } else {
-            userRepo.save(inputUser);
-            responseObj.setStatus("success");
-            responseObj.setMessage("success");
-            responseObj.setPayload(inputUser);
-        }
-        return responseObj;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<UserEntity> optUser = userRepo.findByEmail(email);
