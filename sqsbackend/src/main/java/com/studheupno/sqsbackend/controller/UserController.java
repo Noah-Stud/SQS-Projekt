@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +16,12 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<ResponseObjectEntity> findAllUsers() {
+    public ResponseEntity<RequestResponse> findAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/user/findByEmail")
-    public ResponseEntity<ResponseObjectEntity> findById(@RequestBody String inputEmail) {
+    public ResponseEntity<RequestResponse> findById(@RequestBody String inputEmail) {
         return new ResponseEntity<>(userService.findByEmail(inputEmail), HttpStatus.OK);
     }
 }

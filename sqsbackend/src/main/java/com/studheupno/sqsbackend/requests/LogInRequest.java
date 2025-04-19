@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.entity.requests;
+package com.studheupno.sqsbackend.requests;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.entity.requests;
+package com.studheupno.sqsbackend.requests;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseObjectEntity {
+public class RequestResponse {
     private String status;
     private String message;
     private Object payload;

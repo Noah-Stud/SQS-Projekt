@@ -1,9 +1,9 @@
 package com.studheupno.sqsbackend.controller;
 
 import com.studheupno.sqsbackend.entity.UserEntity;
-import com.studheupno.sqsbackend.entity.requests.LogInRequest;
-import com.studheupno.sqsbackend.entity.requests.RegisterRequest;
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.LogInRequest;
+import com.studheupno.sqsbackend.requests.RegisterRequest;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.service.JwtService;
 import org.slf4j.Logger;
@@ -34,26 +34,26 @@ public class AuthController {
     UserRepo userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseObjectEntity> authenticateUser(@RequestBody LogInRequest loginRequest) {
+    public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequest loginRequest) {
         logger.info(loginRequest.getEmail());
         try{
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtService.generateJwtToken(authentication);
-            return new ResponseEntity<>(new ResponseObjectEntity("success", "authenticated",
+            return new ResponseEntity<>(new RequestResponse("success", "authenticated",
                     jwt), HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(new ResponseObjectEntity("fail", "unauthenticated",
+            return new ResponseEntity<>(new RequestResponse("fail", "unauthenticated",
                     null), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseObjectEntity> registerUser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequest registerRequest) {
 
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            return new ResponseEntity<>(new ResponseObjectEntity("fail", "Error: Email is already in use!",
+            return new ResponseEntity<>(new RequestResponse("fail", "Error: Email is already in use!",
                     null), HttpStatus.BAD_REQUEST);
         }
 
@@ -62,7 +62,7 @@ public class AuthController {
                 encoder.encode(registerRequest.getPassword()), "");
         userRepository.save(user);
 
-        return new ResponseEntity<>(new ResponseObjectEntity("fail", "User registered successfully!",
+        return new ResponseEntity<>(new RequestResponse("fail", "User registered successfully!",
                 null), HttpStatus.OK);
     }
 }

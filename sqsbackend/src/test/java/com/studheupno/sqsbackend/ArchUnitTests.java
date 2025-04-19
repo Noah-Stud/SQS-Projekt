@@ -39,5 +39,11 @@ public class ArchUnitTests {
 
         rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Entity").should().resideInAPackage("..entity..");
         rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Request").should().resideInAPackage("..requests");
+        rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Response").should().resideInAPackage("..requests");
+        rule.check(importedClasses);
     }
 }

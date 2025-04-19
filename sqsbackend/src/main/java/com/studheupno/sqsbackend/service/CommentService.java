@@ -2,7 +2,7 @@ package com.studheupno.sqsbackend.service;
 
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ public class CommentService {
     @Autowired
     private MessageService messageService;
 
-    public ResponseObjectEntity insertComment(CommentEntity inputComment, String inputMessageId) {
+    public RequestResponse insertComment(CommentEntity inputComment, String inputMessageId) {
         return messageService.updateMessageByComment(inputMessageId, inputComment);
     }
 
-    public ResponseObjectEntity getComments(String inputMessageId) {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse getComments(String inputMessageId) {
+        RequestResponse responseObj = new RequestResponse();
         Optional<MessageEntity> optTargetPost = messageRepo.findById(inputMessageId);
         if (optTargetPost.isEmpty()) {
             responseObj.setStatus("fail");

@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.entity.requests;
+package com.studheupno.sqsbackend.requests;
 
 import com.studheupno.sqsbackend.entity.UserEntity;
 import lombok.AllArgsConstructor;

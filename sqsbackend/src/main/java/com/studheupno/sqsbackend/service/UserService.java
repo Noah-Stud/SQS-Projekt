@@ -2,8 +2,8 @@ package com.studheupno.sqsbackend.service;
 
 import java.util.Optional;
 
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
-import com.studheupno.sqsbackend.entity.requests.UserRequestResponse;
+import com.studheupno.sqsbackend.requests.RequestResponse;
+import com.studheupno.sqsbackend.requests.UserRequestResponse;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.entity.UserEntity;
 
@@ -20,16 +20,16 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
-    public ResponseObjectEntity findAll() {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse findAll() {
+        RequestResponse responseObj = new RequestResponse();
         responseObj.setPayload(userRepo.findAll());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
         return responseObj;
     }
 
-    public ResponseObjectEntity findByEmail(String email) {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse findByEmail(String email) {
+        RequestResponse responseObj = new RequestResponse();
         Optional<UserEntity> optUser = userRepo.findByEmail(email);
 
         if (optUser.isEmpty()) {

@@ -2,7 +2,7 @@ package com.studheupno.sqsbackend.service;
 
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.repo.CommentRepo;
 import com.studheupno.sqsbackend.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class MessageService {
     @Autowired
     private CommentRepo commentRepo;
 
-    public ResponseObjectEntity insertMessage(MessageEntity inputPost) {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse insertMessage(MessageEntity inputPost) {
+        RequestResponse responseObj = new RequestResponse();
         inputPost.setCreatedAt(Instant.now());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
@@ -31,8 +31,8 @@ public class MessageService {
         return responseObj;
     }
 
-    public ResponseObjectEntity getAllMessages() {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse getAllMessages() {
+        RequestResponse responseObj = new RequestResponse();
         List<MessageEntity> messages = messageRepo.findAll();
 
         if (messages.isEmpty()) {
@@ -47,8 +47,8 @@ public class MessageService {
         return responseObj;
     }
 
-    public ResponseObjectEntity updateMessageByComment(String inputMessageId, CommentEntity inputComment) {
-        ResponseObjectEntity responseObj = new ResponseObjectEntity();
+    public RequestResponse updateMessageByComment(String inputMessageId, CommentEntity inputComment) {
+        RequestResponse responseObj = new RequestResponse();
         Optional<MessageEntity> optPost = messageRepo.findById(inputMessageId);
 
         if (optPost.isEmpty()) {

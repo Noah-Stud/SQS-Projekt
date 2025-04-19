@@ -2,7 +2,7 @@ package com.studheupno.sqsbackend.controller;
 
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.service.MessageService;
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping("/insertmessage")
-    public ResponseEntity<ResponseObjectEntity> insertPost(@RequestBody MessageEntity inputPost) {
+    public ResponseEntity<RequestResponse> insertPost(@RequestBody MessageEntity inputPost) {
         return new ResponseEntity<>(messageService.insertMessage(inputPost), HttpStatus.OK);
     }
 
     @GetMapping("/messages")
-    public ResponseEntity<ResponseObjectEntity> getAllMessages() {
+    public ResponseEntity<RequestResponse> getAllMessages() {
         return new ResponseEntity<>(messageService.getAllMessages(), HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.entity.requests.ResponseObjectEntity;
+import com.studheupno.sqsbackend.requests.RequestResponse;
 
 import com.studheupno.sqsbackend.service.MessageService;
 import org.junit.jupiter.api.Test;
@@ -29,13 +29,13 @@ class MessageControllerTest {
 
     @Test
     void getAllMessagesTest() {
-        ResponseObjectEntity responseObjMessageService = new ResponseObjectEntity();
+        RequestResponse responseObjMessageService = new RequestResponse();
         responseObjMessageService.setStatus("fail");
         responseObjMessageService.setMessage("cannot find messages");
         responseObjMessageService.setPayload(null);
         when(messageService.getAllMessages()).thenReturn(responseObjMessageService);
 
-        ResponseEntity<ResponseObjectEntity> responseObject;
+        ResponseEntity<RequestResponse> responseObject;
         responseObject = messageController.getAllMessages();
 
         assertNotNull(responseObject);
