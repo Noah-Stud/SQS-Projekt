@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
 
     public RequestResponse findAll() {
         RequestResponse responseObj = new RequestResponse();
-        responseObj.setPayload(userRepo.findAll());
+        responseObj.setPayload(userRepo.findAll().stream().map(UserRequestResponse::new).toList());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
         return responseObj;
