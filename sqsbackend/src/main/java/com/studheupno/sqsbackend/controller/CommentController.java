@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     @PostMapping("/getcomments")
-    public ResponseEntity<RequestResponse> getComments(@RequestBody String postId) {
-        return new ResponseEntity<>(commentService.getComments(postId), HttpStatus.OK);
+    public ResponseEntity<RequestResponse> getComments(@RequestBody String messageId) {
+        return new ResponseEntity<>(commentService.getComments(messageId), HttpStatus.OK);
     }
 }

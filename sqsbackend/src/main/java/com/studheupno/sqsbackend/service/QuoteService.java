@@ -9,6 +9,10 @@ public class QuoteService {
     private final RestClient restClient = RestClient.create();
 
     public String getQuote() {
-        return restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(String.class);
+        String quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(String.class);
+        if (quote == null || quote.isEmpty()) {
+            return "No data found";
+        } else
+            return quote;
     }
 }

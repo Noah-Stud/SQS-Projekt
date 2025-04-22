@@ -1,6 +1,5 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.service.MessageService;
 import com.studheupno.sqsbackend.requests.RequestResponse;
 
@@ -22,8 +21,8 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping("/insertmessage")
-    public ResponseEntity<RequestResponse> insertPost(@RequestBody MessageEntity inputPost) {
-        return new ResponseEntity<>(messageService.insertMessage(inputPost), HttpStatus.OK);
+    public ResponseEntity<RequestResponse> insertMessage(@RequestBody String messageContent) {
+        return new ResponseEntity<>(messageService.insertMessage(messageContent), HttpStatus.OK);
     }
 
     @GetMapping("/messages")

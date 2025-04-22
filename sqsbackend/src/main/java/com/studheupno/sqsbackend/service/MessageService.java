@@ -21,13 +21,17 @@ public class MessageService {
     private MessageRepo messageRepo;
     @Autowired
     private CommentRepo commentRepo;
+    @Autowired
+    private QuoteService quoteService;
 
-    public RequestResponse insertMessage(MessageEntity inputPost) {
+    public RequestResponse insertMessage(String inputContent) {
+        MessageEntity newMessage = new MessageEntity(null, "1", inputContent, Instant.now(),
+                quoteService.getQuote(), new ArrayList<>(), new ArrayList<>());
+
         RequestResponse responseObj = new RequestResponse();
-        inputPost.setCreatedAt(Instant.now());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
-        responseObj.setPayload(messageRepo.save(inputPost));
+        responseObj.setPayload(messageRepo.save(newMessage));
         return responseObj;
     }
 

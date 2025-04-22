@@ -17,17 +17,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Document(collection = "message")
 public class MessageEntity {
-
     @Id
     private String id;
-
     private String userId;
-
     private String content;
-
     private Instant createdAt;
+    private String quote;
 
-    List<String> likes = new ArrayList<>();
-
-    List<CommentEntity> comments = new ArrayList<>();
+    private List<String> likes = new ArrayList<>();
+    private List<CommentEntity> comments = new ArrayList<>();
 }
