@@ -44,8 +44,9 @@ public class AuthController {
             return new ResponseEntity<>(new RequestResponse("success", "authenticated",
                     jwt), HttpStatus.OK);
         }catch (Exception e) {
+            logger.info("{} failed", loginRequest.getEmail());
             return new ResponseEntity<>(new RequestResponse("fail", "unauthenticated",
-                    null), HttpStatus.BAD_REQUEST);
+                    null), HttpStatus.UNAUTHORIZED);
         }
     }
 
