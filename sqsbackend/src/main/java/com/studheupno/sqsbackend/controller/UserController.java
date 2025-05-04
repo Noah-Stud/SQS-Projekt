@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/user/v1")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/getAll")
     public ResponseEntity<RequestResponse> findAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/user/findByEmail")
+    @GetMapping("/getByEmail")
     public ResponseEntity<RequestResponse> findByEmail(@RequestBody String inputEmail) {
         return new ResponseEntity<>(userService.findByEmail(inputEmail), HttpStatus.OK);
     }
