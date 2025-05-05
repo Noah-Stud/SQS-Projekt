@@ -2,49 +2,33 @@ package com.studheupno.sqsbackend.service;
 
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
+import com.studheupno.sqsbackend.entity.UserEntity;
+import com.studheupno.sqsbackend.repo.UserRepo;
+import com.studheupno.sqsbackend.requests.CommentRequest;
 import com.studheupno.sqsbackend.requests.RequestResponse;
-import com.studheupno.sqsbackend.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CommentService {
 
     @Autowired
-    private MessageRepo messageRepo;
-
+    private UserRepo userRepo;
     @Autowired
     private MessageService messageService;
 
-    public RequestResponse insertComment(CommentEntity inputComment, String inputMessageId) {
-        return messageService.updateMessageByComment(inputMessageId, inputComment);
-    }
+    public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputMessageId, String inputUserEmail) {
+        Optional<UserEntity> optionalUserEntity =  userRepo.findByEmail(inputUserEmail);
 
-    public RequestResponse getComments(String inputMessageId) {
-        RequestResponse responseObj = new RequestResponse();
-        Optional<MessageEntity> optTargetPost = messageRepo.findById(inputMessageId);
-        if (optTargetPost.isEmpty()) {
+        if (optionalUserEntity.isEmpty()) {
+            RequestResponse responseObj = new RequestResponse();
             responseObj.setStatus("fail");
-            responseObj.setMessage("Message with id: " + inputMessageId + " not found");
+            responseObj.setMessage("User with email: " + inputUserEmail + " not found");
             responseObj.setPayload(null);
             return responseObj;
-        } else {
-            MessageEntity targetPost = optTargetPost.get();
-            List<CommentEntity> commentList = targetPost.getComments();
-            if (!commentList.isEmpty()) {
-                responseObj.setStatus("success");
-                responseObj.setMessage("success");
-                responseObj.setPayload(commentList);
-                return responseObj;
-            } else {
-                responseObj.setStatus("success");
-                responseObj.setMessage("Message with id " + inputMessageId + " does not have any comment");
-                responseObj.setPayload(null);
-                return responseObj;
-            }
         }
+        return messageService.updateMessageByComment(inputMessageId, inputCommentRequest.getCommentContent());
     }
 }

@@ -1,10 +1,14 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.controller.AuthController;
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
+import com.studheupno.sqsbackend.requests.MessagesRequestResponse;
 import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.repo.CommentRepo;
 import com.studheupno.sqsbackend.repo.MessageRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +28,32 @@ public class MessageService {
     @Autowired
     private QuoteService quoteService;
 
-    public RequestResponse insertMessage(String inputContent) {
-        MessageEntity newMessage = new MessageEntity(null, "1", inputContent, Instant.now(),
+    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
+
+    public RequestResponse insertMessage(String userEmail, String inputContent) {
+        MessageEntity newMessage = new MessageEntity(null, userEmail, inputContent, Instant.now(),
                 quoteService.getQuote(), new ArrayList<>(), new ArrayList<>());
 
         RequestResponse responseObj = new RequestResponse();
         responseObj.setStatus("success");
         responseObj.setMessage("success");
         responseObj.setPayload(messageRepo.save(newMessage));
+        return responseObj;
+    }
+
+    public RequestResponse getMessageById(String id) {
+        RequestResponse responseObj = new RequestResponse();
+        Optional<MessageEntity> optMessage = messageRepo.findById(id);
+
+        if (optMessage.isEmpty()) {
+            responseObj.setStatus("fail");
+            responseObj.setMessage("message id: " + id + " does no exist");
+            responseObj.setPayload(null);
+        } else {
+            responseObj.setStatus("success");
+            responseObj.setMessage("success");
+            responseObj.setPayload(optMessage.get());
+        }
         return responseObj;
     }
 
@@ -46,34 +68,72 @@ public class MessageService {
         } else {
             responseObj.setStatus("success");
             responseObj.setMessage("success");
-            responseObj.setPayload(messages);
+            responseObj.setPayload(messages.stream().map(MessagesRequestResponse::new ).toList());
         }
         return responseObj;
     }
 
-    public RequestResponse updateMessageByComment(String inputMessageId, CommentEntity inputComment) {
+    public RequestResponse updateMessageByComment(String inputMessageId, String inputCommentContent) {
         RequestResponse responseObj = new RequestResponse();
-        Optional<MessageEntity> optPost = messageRepo.findById(inputMessageId);
 
-        if (optPost.isEmpty()) {
+        Optional<MessageEntity> optMessage = messageRepo.findById(inputMessageId);
+        if (optMessage.isEmpty()) {
             responseObj.setStatus("fail");
             responseObj.setMessage("cannot find message with id: " + inputMessageId);
             responseObj.setPayload(null);
         } else {
-            inputComment.setCreatedAt(Instant.now());
-            commentRepo.save(inputComment);
+            MessageEntity targetMessage = optMessage.get();
 
-            MessageEntity targetMessage = optPost.get();
+            CommentEntity newComment = new CommentEntity();
+            newComment.setId(null);
+            newComment.setUserId(targetMessage.getUserId());
+            newComment.setContent(inputCommentContent);
+            newComment.setCreatedAt(Instant.now());
+            commentRepo.save(newComment);
+
             List<CommentEntity> commentList = targetMessage.getComments();
             if (commentList == null) {
                 commentList = new ArrayList<>();
             }
-            commentList.add(inputComment);
+            commentList.add(newComment);
             targetMessage.setComments(commentList);
             messageRepo.save(targetMessage);
 
             responseObj.setStatus("success");
-            responseObj.setMessage("message was updated successfully");
+            responseObj.setMessage("comment has been added to message");
+            responseObj.setPayload(targetMessage);
+        }
+        return responseObj;
+    }
+
+    public RequestResponse updateMessageByLike(String userEmail, String messageId) {
+        RequestResponse responseObj = new RequestResponse();
+        //Remove last char, because reason
+        messageId = messageId.substring(0, messageId.length()-1);
+
+        Optional<MessageEntity> optMessage = messageRepo.findById(messageId);
+        if (optMessage.isEmpty()) {
+            responseObj.setStatus("fail");
+            responseObj.setMessage("cannot find message id: " + messageId);
+            responseObj.setPayload(null);
+            logger.info("Error: cannot find message with id: {}", messageId);
+        } else {
+            MessageEntity targetMessage = optMessage.get();
+            List<String> likesList = targetMessage.getLikes();
+            if (likesList == null) {
+                likesList = new ArrayList<>();
+            }
+
+            if (!likesList.contains(userEmail)) {
+                likesList.add(userEmail);
+            } else {
+                likesList.remove(userEmail);
+            }
+            targetMessage.setLikes(likesList);
+            messageRepo.save(targetMessage);
+            logger.info("Message with id: {} has been updated", messageId);
+            responseObj.setStatus("success");
+            responseObj.setMessage("update likes to the target post id: " + targetMessage.getId());
             responseObj.setPayload(targetMessage);
         }
         return responseObj;
