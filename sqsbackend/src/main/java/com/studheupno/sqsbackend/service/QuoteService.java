@@ -1,5 +1,6 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.requests.QuoteDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -9,10 +10,10 @@ public class QuoteService {
     private final RestClient restClient = RestClient.create();
 
     public String getQuote() {
-        String quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(String.class);
-        if (quote == null || quote.isEmpty()) {
+        QuoteDto[] quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class);
+        if (quote == null) {
             return "No data found";
         } else
-            return quote;
+            return quote[0].getQ() + " \n " + quote[0].getA();
     }
 }
