@@ -17,7 +17,7 @@ public class CommentService {
     @Autowired
     private MessageService messageService;
 
-    public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputMessageId, String inputUserEmail) {
+    public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputUserEmail) {
         Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(inputUserEmail);
 
         if (optionalUserEntity.isEmpty()) {
@@ -27,6 +27,6 @@ public class CommentService {
             responseObj.setPayload(null);
             return responseObj;
         }
-        return messageService.updateMessageByComment(inputMessageId, inputCommentRequest.getCommentContent());
+        return messageService.updateMessageByComment(inputCommentRequest.getMessageId(), inputCommentRequest.getCommentContent());
     }
 }
