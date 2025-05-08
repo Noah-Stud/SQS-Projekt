@@ -1,29 +1,36 @@
 package com.studheupno.sqsbackend.entity;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
+
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "message")
 public class MessageEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String userId;
+    @NotNull
+    @ManyToOne
+    private UserEntity user;
+    @NotNull
     private String content;
+    @NotNull
     private Instant createdAt;
+    @NotNull
     private String quote;
 
-    private List<String> likes = new ArrayList<>();
+    @OneToMany
+    private List<UserEntity> likes = new ArrayList<>();
+    @OneToMany
     private List<CommentEntity> comments = new ArrayList<>();
 }

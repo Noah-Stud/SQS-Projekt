@@ -1,8 +1,6 @@
 package com.studheupno.sqsbackend.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +8,16 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "comment")
 public class CommentEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String userId;
+    @ManyToOne
+    private UserEntity user;
     private String content;
     private Instant createdAt;
 }

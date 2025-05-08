@@ -1,7 +1,5 @@
 package com.studheupno.sqsbackend.service;
 
-import com.studheupno.sqsbackend.entity.CommentEntity;
-import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.requests.CommentRequest;
@@ -20,7 +18,7 @@ public class CommentService {
     private MessageService messageService;
 
     public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputMessageId, String inputUserEmail) {
-        Optional<UserEntity> optionalUserEntity =  userRepo.findByEmail(inputUserEmail);
+        Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(inputUserEmail);
 
         if (optionalUserEntity.isEmpty()) {
             RequestResponse responseObj = new RequestResponse();

@@ -1,15 +1,16 @@
 services:
-  mongodb:
-    image: mongo
+  mysql-db:
+    image: mysql:8.4.4
+    restart: always
+    environment:
+      - MYSQL_DATABASE=messages
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
     ports:
-      - 27017:27017
+      - '3306:3306'
     volumes:
       - type: bind
-        source: volumes/mongodb-dat-db
-        target: /data/db
+        source: volumes/mysql/db
+        target: /var/lib/mysql
       - type: bind
-        source: volumes/mongodb-dat-conf
-        target: /data/configdb
-      - type: bind
-        source: volumes/mongodb-logt
-        target: /var/log/mongodb
+        source: volumes/mysql/init.sql
+        target: /docker-entrypoint-initdb.d/init.sql

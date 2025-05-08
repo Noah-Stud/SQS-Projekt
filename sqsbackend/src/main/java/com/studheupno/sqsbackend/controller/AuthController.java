@@ -1,10 +1,10 @@
 package com.studheupno.sqsbackend.controller;
 
 import com.studheupno.sqsbackend.entity.UserEntity;
+import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.requests.LogInRequest;
 import com.studheupno.sqsbackend.requests.RegisterRequest;
 import com.studheupno.sqsbackend.requests.RequestResponse;
-import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth/v1")
@@ -36,14 +39,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequest loginRequest) {
         logger.info(loginRequest.getEmail());
-        try{
+        try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtService.generateJwtToken(authentication);
             return new ResponseEntity<>(new RequestResponse("success", "authenticated",
                     jwt), HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.info("{} failed", loginRequest.getEmail());
             return new ResponseEntity<>(new RequestResponse("fail", "unauthenticated",
                     null), HttpStatus.UNAUTHORIZED);
@@ -58,8 +61,7 @@ public class AuthController {
                     null), HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity user = new UserEntity(null, registerRequest.getName(),
-                registerRequest.getEmail(),
+        UserEntity user = new UserEntity(null, registerRequest.getEmail(),
                 encoder.encode(registerRequest.getPassword()), "");
         userRepository.save(user);
 
