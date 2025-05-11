@@ -1,13 +1,13 @@
 package com.studheupno.sqsbackend.service;
 
 import com.studheupno.sqsbackend.requests.QuoteDto;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
 import org.springframework.web.client.RestClient;
 
-@Service
+@AllArgsConstructor
 public class QuoteService {
 
-    private final RestClient restClient = RestClient.create();
+    private final RestClient restClient;
 
     public String getQuote() {
         QuoteDto[] quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class);
