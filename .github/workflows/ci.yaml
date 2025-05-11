@@ -21,7 +21,7 @@ jobs:
         run: chmod +x sqsbackend/gradlew 
         
       - name: Build with Gradle
-        run: ./sqsbackend/gradlew build
+        run: ./sqsbackend/gradlew build -p sqsbackend/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
