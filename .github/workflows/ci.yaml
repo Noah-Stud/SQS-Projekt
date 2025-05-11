@@ -47,3 +47,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifact
+          
+      - name: Run unit tests
+        run: ./sqsbackend/gradlew test
