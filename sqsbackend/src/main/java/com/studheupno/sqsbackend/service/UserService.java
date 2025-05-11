@@ -1,18 +1,17 @@
 package com.studheupno.sqsbackend.service;
 
-import java.util.Optional;
-
+import com.studheupno.sqsbackend.entity.UserEntity;
+import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.requests.UserRequestResponse;
-import com.studheupno.sqsbackend.repo.UserRepo;
-import com.studheupno.sqsbackend.entity.UserEntity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -22,9 +21,9 @@ public class UserService implements UserDetailsService {
 
     public RequestResponse findAll() {
         RequestResponse responseObj = new RequestResponse();
-        responseObj.setPayload(userRepo.findAll().stream().map(UserRequestResponse::new).toList());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
+        responseObj.setPayload(userRepo.findAll().stream().map(UserRequestResponse::new).toList());
         return responseObj;
     }
 
@@ -34,7 +33,7 @@ public class UserService implements UserDetailsService {
 
         if (optUser.isEmpty()) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("user id: " + email + " does no exist");
+            responseObj.setMessage("User with email: " + email + " not found");
             responseObj.setPayload(null);
         } else {
             responseObj.setPayload(new UserRequestResponse(optUser.get()));
@@ -52,9 +51,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Cannot find user with email: " + email);
         } else {
             UserEntity foundUser = optUser.get();
-//            String role = foundUser.getRole();
-//            Set<GrantedAuthority> ga = new HashSet<>();
-//            ga.add(new SimpleGrantedAuthority(role));
             return new User(foundUser.getEmail(), foundUser.getPassword(), foundUser.getAuthorities());
         }
     }

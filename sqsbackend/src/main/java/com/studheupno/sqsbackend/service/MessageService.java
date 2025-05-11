@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class MessageService {
     private CommentRepo commentRepo;
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    private QuoteService quoteService;
+
+    private final QuoteService quoteService = new QuoteService(RestClient.create());
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
     public RequestResponse insertMessage(String userEmail, String inputContent) {
@@ -39,14 +40,15 @@ public class MessageService {
         if (optionalUserEntity.isEmpty()) {
             RequestResponse responseObj = new RequestResponse();
             responseObj.setStatus("fail");
-            responseObj.setMessage("user with email: " + userEmail + " does no exist");
+            responseObj.setMessage("User with email: " + userEmail + " not found");
+            responseObj.setPayload(null);
             logger.error("user with email: {} does no exist", userEmail);
             return responseObj;
         }
 
         MessageEntity newMessage = new MessageEntity(null, optionalUserEntity.get(), inputContent, Instant.now(),
                 quoteService.getQuote(), new ArrayList<>(), new ArrayList<>());
-        messageRepo.save(newMessage);
+        newMessage = messageRepo.save(newMessage);
         logger.info("Message for user: {} was created", userEmail);
 
         RequestResponse responseObj = new RequestResponse();
@@ -62,12 +64,12 @@ public class MessageService {
 
         if (optMessage.isEmpty()) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("message id: " + id + " does no exist");
+            responseObj.setMessage("Message with id: " + id + " not found");
             responseObj.setPayload(null);
         } else {
             responseObj.setStatus("success");
             responseObj.setMessage("success");
-            responseObj.setPayload(optMessage.get());
+            responseObj.setPayload(new MessagesRequestResponse(optMessage.get()));
         }
         return responseObj;
     }
@@ -88,17 +90,14 @@ public class MessageService {
         Optional<MessageEntity> optMessage = messageRepo.findById(inputMessageId);
         if (optMessage.isEmpty()) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("cannot find message with id: " + inputMessageId);
+            responseObj.setMessage("Message with id: " + inputMessageId + " not found");
             responseObj.setPayload(null);
         } else {
             MessageEntity targetMessage = optMessage.get();
 
-            CommentEntity newComment = new CommentEntity();
-            newComment.setId(null);
-            newComment.setUser(targetMessage.getUser());
-            newComment.setContent(inputCommentContent);
-            newComment.setCreatedAt(Instant.now());
-            commentRepo.save(newComment);
+            CommentEntity newComment = new CommentEntity(null, targetMessage.getUser(), inputCommentContent,
+                    Instant.now());
+            newComment = commentRepo.save(newComment);
 
             List<CommentEntity> commentList = targetMessage.getComments();
             if (commentList == null) {
@@ -109,7 +108,7 @@ public class MessageService {
             messageRepo.save(targetMessage);
 
             responseObj.setStatus("success");
-            responseObj.setMessage("comment has been added to message");
+            responseObj.setMessage("Comment has been added to message");
             responseObj.setPayload(new CommentRequestResponse(newComment));
         }
         return responseObj;
@@ -123,7 +122,7 @@ public class MessageService {
         if (optMessage.isEmpty()) {
             logger.info("Error: cannot find message with id: {}", messageId);
             responseObj.setStatus("fail");
-            responseObj.setMessage("message with id: " + messageId + " does no exist");
+            responseObj.setMessage("Message with id: " + messageId + " not found");
             responseObj.setPayload(null);
             return responseObj;
         } else {
@@ -131,7 +130,7 @@ public class MessageService {
             if (optionalUserEntity.isEmpty()) {
                 responseObj = new RequestResponse();
                 responseObj.setStatus("fail");
-                responseObj.setMessage("user with email: " + userEmail + " does no exist");
+                responseObj.setMessage("User with email: " + userEmail + " not found");
                 responseObj.setPayload(null);
                 return responseObj;
             } else {
@@ -155,12 +154,12 @@ public class MessageService {
         }
 
         messageEntity.setLikes(likesList);
-        messageRepo.save(messageEntity);
+        messageEntity = messageRepo.save(messageEntity);
         logger.info("Message with id: {} has been updated", messageEntity.getId());
 
         responseObj.setStatus("success");
         responseObj.setMessage("update likes to the target post id: " + messageEntity.getId());
-        responseObj.setPayload(messageEntity);
+        responseObj.setPayload(new MessagesRequestResponse(messageEntity));
         return responseObj;
     }
 }
