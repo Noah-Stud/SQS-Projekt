@@ -49,7 +49,7 @@ jobs:
           name: build-artifact
 
       - name: Permissions
-        run: chmod +x sqsbackend/gradlew 
+        run: chmod +x sqsbackend/gradlew -p sqsbackend/
           
       - name: Run unit tests
         run: ./sqsbackend/gradlew test
