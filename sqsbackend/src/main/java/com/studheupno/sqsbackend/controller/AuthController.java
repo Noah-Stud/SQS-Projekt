@@ -65,7 +65,7 @@ public class AuthController {
                 encoder.encode(registerRequest.getPassword()), "");
         userRepository.save(user);
 
-        return new ResponseEntity<>(new RequestResponse("fail", "User registered successfully!",
+        return new ResponseEntity<>(new RequestResponse("success", "User registered successfully!",
                 null), HttpStatus.OK);
     }
 }
