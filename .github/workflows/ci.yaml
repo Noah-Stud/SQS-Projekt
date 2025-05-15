@@ -54,7 +54,7 @@ jobs:
       - name: Run unit tests
         run: ./sqsbackend/gradlew test -p sqsbackend/
         
-   create-jacoco-report:
+  create-jacoco-report:
     name: Create jacoco report
     needs: run-unit-tests
     runs-on: ubuntu-latest
