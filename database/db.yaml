@@ -1,0 +1,15 @@
+services:
+  mysql-db:
+    image: mysql:8.4.4
+    environment:
+      - MYSQL_DATABASE=messages
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    volumes:
+      - type: bind
+        source: volumes/db
+        target: /var/lib/mysql
+      - type: bind
+        source: volumes/init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
