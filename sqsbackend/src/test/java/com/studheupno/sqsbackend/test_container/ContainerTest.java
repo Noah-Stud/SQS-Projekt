@@ -160,21 +160,24 @@ public class ContainerTest {
         assertEquals("New message 1", ((List<MessagesRequestResponse>) responseEntity.getBody().getPayload())
                 .getFirst().getContent());
 
-
+        //
         MessagesRequestResponse messageResponse = ((List<MessagesRequestResponse>) responseEntity.getBody().getPayload())
                 .getFirst();
         responseEntity = messageController.getMessageById(messageResponse.getId());
+
         assertNotNull(responseEntity.getBody());
         assertEquals("success", responseEntity.getBody().getStatus());
         assertEquals("success", responseEntity.getBody().getMessage());
         assertEquals(messageResponse, responseEntity.getBody().getPayload());
 
+        //
+        responseEntity = messageController.likePost(userExist, messageResponse.getId() + "=");
 
-//        responseEntity = messageController.likePost(userExist, messageResponse.getId());
-//        assertNotNull(responseEntity.getBody());
-//        assertEquals("success", responseEntity.getBody().getStatus());
-//        assertEquals("update likes to the target post id: " + messageResponse.getId(), responseEntity.getBody().getMessage());
-//        assertTrue(((MessagesRequestResponse) responseEntity.getBody().getPayload()).getLikes().contains(userDoesNotExist.getEmail()));
+        assertNotNull(responseEntity.getBody());
+        assertEquals("success", responseEntity.getBody().getStatus());
+        assertEquals("update likes to the target post id: " + messageResponse.getId(), responseEntity.getBody().getMessage());
+        assertTrue(((MessagesRequestResponse) responseEntity.getBody().getPayload()).getLikes()
+                .contains(userExist.getEmail()));
     }
 
     @Test

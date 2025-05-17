@@ -116,7 +116,6 @@ public class MessageService {
 
     public RequestResponse updateMessageByLike(String userEmail, String messageId) {
         RequestResponse responseObj = new RequestResponse();
-        messageId = messageId.substring(0, messageId.length() - 1);         //Remove last char, because reason
 
         Optional<MessageEntity> optMessage = messageRepo.findById(messageId);
         if (optMessage.isEmpty()) {
