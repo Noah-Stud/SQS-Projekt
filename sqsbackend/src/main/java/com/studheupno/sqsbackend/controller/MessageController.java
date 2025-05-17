@@ -44,8 +44,8 @@ public class MessageController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<RequestResponse> likePost(@AuthenticationPrincipal UserDetails userDetails,
-                                                    @RequestBody String messageId) {
+    public ResponseEntity<RequestResponse> likeMessage(@AuthenticationPrincipal UserDetails userDetails,
+                                                       @RequestBody String messageId) {
         messageId = messageId.substring(0, messageId.length() - 1);        //Remove last char, because reason
         RequestResponse messageResponse = messageService.updateMessageByLike(userDetails.getUsername(), messageId);
 

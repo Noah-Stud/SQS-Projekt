@@ -171,7 +171,7 @@ public class ContainerTest {
         assertEquals(messageResponse, responseEntity.getBody().getPayload());
 
         //
-        responseEntity = messageController.likePost(userExist, messageResponse.getId() + "=");
+        responseEntity = messageController.likeMessage(userExist, messageResponse.getId() + "=");
 
         assertNotNull(responseEntity.getBody());
         assertEquals("success", responseEntity.getBody().getStatus());

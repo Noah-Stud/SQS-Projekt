@@ -143,7 +143,7 @@ class MessageServiceTest {
         //Message does not exist
         when(messageRepo.findById("idNotExist")).thenReturn(Optional.empty());
 
-        RequestResponse response = messageService.updateMessageByLike(user.getEmail(), "idNotExist=");
+        RequestResponse response = messageService.updateMessageByLike(user.getEmail(), "idNotExist");
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -154,7 +154,7 @@ class MessageServiceTest {
         when(messageRepo.findById(message.getId())).thenReturn(Optional.of(message));
         when(userRepo.findByEmail("emailNotExist")).thenReturn(Optional.empty());
 
-        response = messageService.updateMessageByLike("emailNotExist", message.getId() + "=");
+        response = messageService.updateMessageByLike("emailNotExist", message.getId());
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -166,7 +166,7 @@ class MessageServiceTest {
         when(userRepo.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(messageRepo.save(any(MessageEntity.class))).thenReturn(message);
 
-        response = messageService.updateMessageByLike(user.getEmail(), message.getId() + "=");
+        response = messageService.updateMessageByLike(user.getEmail(), message.getId());
 
         assertNotNull(response);
         assertEquals("success", response.getStatus());

@@ -114,7 +114,7 @@ class MessageControllerTest {
     }
 
     @Test
-    void likePost() {
+    void likeMessage() {
         ResponseEntity<RequestResponse> responseObjectActual;
         RequestResponse responseObjMock = new RequestResponse();
 
@@ -124,7 +124,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(null);
         when(messageService.updateMessageByLike(user.getEmail(), message.getId())).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.likePost(user, message.getId());
+        responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -137,7 +137,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(null);
         when(messageService.updateMessageByLike(user.getEmail(), message.getId())).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.likePost(user, message.getId());
+        responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -150,7 +150,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(null);
         when(messageService.updateMessageByLike(user.getEmail(), message.getId())).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.likePost(user, message.getId());
+        responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
