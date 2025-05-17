@@ -20,7 +20,7 @@ public class MessagesRequestResponse {
     private String id;
     private String userEmail;
     private String content;
-    private CommentRequestResponse[] comments;
+    private List<CommentRequestResponse> comments;
     private Instant createdAt;
     private String quote;
 
@@ -30,7 +30,7 @@ public class MessagesRequestResponse {
         this.id = messageEntity.getId();
         this.userEmail = messageEntity.getUser().getEmail();
         this.content = messageEntity.getContent();
-        this.comments = messageEntity.getComments().stream().map(CommentRequestResponse::new).toArray(CommentRequestResponse[]::new);
+        this.comments = messageEntity.getComments().stream().map(CommentRequestResponse::new).toList();
         this.createdAt = messageEntity.getCreatedAt();
         this.quote = messageEntity.getQuote();
         this.likes = messageEntity.getLikes().stream().map(UserEntity::getEmail).collect(Collectors.toList());

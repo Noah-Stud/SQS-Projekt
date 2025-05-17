@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,8 +28,8 @@ public class MessageEntity {
     @NotNull
     private String quote;
 
-    @OneToMany
-    private List<UserEntity> likes = new ArrayList<>();
-    @OneToMany
-    private List<CommentEntity> comments = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<UserEntity> likes;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CommentEntity> comments;
 }

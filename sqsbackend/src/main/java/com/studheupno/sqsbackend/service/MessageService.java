@@ -128,6 +128,7 @@ public class MessageService {
         } else {
             Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(userEmail);
             if (optionalUserEntity.isEmpty()) {
+                logger.info("Error: cannot find user with email: {}", userEmail);
                 responseObj = new RequestResponse();
                 responseObj.setStatus("fail");
                 responseObj.setMessage("User with email: " + userEmail + " not found");
