@@ -36,9 +36,10 @@ public class UserService implements UserDetailsService {
             responseObj.setMessage("User with email: " + email + " not found");
             responseObj.setPayload(null);
         } else {
-            responseObj.setPayload(new UserRequestResponse(optUser.get()));
             responseObj.setStatus("success");
             responseObj.setMessage("success");
+            responseObj.setPayload(new UserRequestResponse(optUser.get()));
+
         }
         return responseObj;
     }

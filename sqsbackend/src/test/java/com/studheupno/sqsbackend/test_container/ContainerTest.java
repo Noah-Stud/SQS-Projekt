@@ -93,11 +93,38 @@ public class ContainerTest {
 
     @Test
     @Order(2)
+    void UserTest() {
+        UserRequestResponse userRequestResponse = new UserRequestResponse("vonan@mail.de");
+
+        ResponseEntity<RequestResponse> responseEntity = userController.findAllUsers();
+
+        assertNotNull(responseEntity.getBody());
+        assertEquals("success", responseEntity.getBody().getStatus());
+        assertEquals("success", responseEntity.getBody().getMessage());
+        assertEquals(userRequestResponse, ((List<UserRequestResponse>) responseEntity.getBody().getPayload()).getFirst());
+
+
+        responseEntity = userController.findByEmail("vonan@mail.de");
+
+        assertNotNull(responseEntity.getBody());
+        assertEquals("success", responseEntity.getBody().getStatus());
+        assertEquals("success", responseEntity.getBody().getMessage());
+        assertEquals(userRequestResponse, responseEntity.getBody().getPayload());
+
+
+        responseEntity = userController.findByEmail("notexist@mail.de");
+
+        assertNotNull(responseEntity.getBody());
+        assertEquals("fail", responseEntity.getBody().getStatus());
+        assertEquals("User with email: " + "notexist@mail.de" + " not found",
+                responseEntity.getBody().getMessage());
+    }
+
+    @Test
+    @Order(3)
     void messageTest() {
         UserEntity userExist = new UserEntity(null, "vonan@mail.de", "1234", "user");
         UserEntity userDoesNotExist = new UserEntity(null, "von@mail.de", "1234", "user");
-        LogInRequest logInRequest = new LogInRequest("vonan@mail.de", "password1234");
-        String jwt = authController.authenticateUser(logInRequest).getBody().getPayload().toString();
 
         ResponseEntity<RequestResponse> responseEntity = messageController.getAllMessages();
 
@@ -151,7 +178,7 @@ public class ContainerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void commentTest() {
         //User does not exist
         UserEntity userDoesNotExist = new UserEntity(null, "von@mail.de", "1234", "user");
