@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.dto.LogInRequest;
-import com.studheupno.sqsbackend.dto.RegisterRequest;
+import com.studheupno.sqsbackend.dto.LogInRequestDto;
+import com.studheupno.sqsbackend.dto.RegisterRequestDto;
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
@@ -37,32 +37,32 @@ public class AuthController {
     UserRepo userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequest loginRequest) {
-        logger.info(loginRequest.getEmail());
+    public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
+        logger.info(loginRequestDto.getEmail());
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginRequest.getEmail(), loginRequest.getPassword()));
+                    loginRequestDto.getEmail(), loginRequestDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtService.generateJwtToken(authentication);
             return new ResponseEntity<>(new RequestResponse("success", "authenticated",
                     jwt), HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("{} failed", loginRequest.getEmail());
+            logger.info("{} failed", loginRequestDto.getEmail());
             return new ResponseEntity<>(new RequestResponse("fail", "unauthenticated",
                     null), HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
 
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+        if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
             return new ResponseEntity<>(new RequestResponse("fail", "Error: Email is already in use!",
                     null), HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity user = new UserEntity(null, registerRequest.getEmail(),
-                encoder.encode(registerRequest.getPassword()), "");
+        UserEntity user = new UserEntity(null, registerRequestDto.getEmail(),
+                encoder.encode(registerRequestDto.getPassword()), "");
         userRepository.save(user);
 
         return new ResponseEntity<>(new RequestResponse("success", "User registered successfully!",

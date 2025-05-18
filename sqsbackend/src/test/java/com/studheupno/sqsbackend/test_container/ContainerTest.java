@@ -57,24 +57,24 @@ public class ContainerTest {
     @Test
     @Order(1)
     void authenticationTest() {
-        RegisterRequest registerRequest = new RegisterRequest("vonan@mail.de", "password1234");
-        ResponseEntity<RequestResponse> responseEntity = authController.registerUser(registerRequest);
+        RegisterRequestDto registerRequestDto = new RegisterRequestDto("vonan@mail.de", "password1234");
+        ResponseEntity<RequestResponse> responseEntity = authController.registerUser(registerRequestDto);
 
         assertNotNull(responseEntity.getBody());
         assertEquals("success", responseEntity.getBody().getStatus());
         assertEquals("User registered successfully!", responseEntity.getBody().getMessage());
 
 
-        registerRequest = new RegisterRequest("vonan@mail.de", "password1234");
-        responseEntity = authController.registerUser(registerRequest);
+        registerRequestDto = new RegisterRequestDto("vonan@mail.de", "password1234");
+        responseEntity = authController.registerUser(registerRequestDto);
 
         assertNotNull(responseEntity.getBody());
         assertEquals("fail", responseEntity.getBody().getStatus());
         assertEquals("Error: Email is already in use!", responseEntity.getBody().getMessage());
 
 
-        LogInRequest logInRequest = new LogInRequest("vonan@mail.de", "password1234");
-        responseEntity = authController.authenticateUser(logInRequest);
+        LogInRequestDto logInRequestDto = new LogInRequestDto("vonan@mail.de", "password1234");
+        responseEntity = authController.authenticateUser(logInRequestDto);
 
         assertNotNull(responseEntity.getBody());
         assertEquals("success", responseEntity.getBody().getStatus());
@@ -82,8 +82,8 @@ public class ContainerTest {
         assertNotNull(responseEntity.getBody().getPayload());
 
 
-        logInRequest = new LogInRequest("vonan@mail.de", "password12345");
-        responseEntity = authController.authenticateUser(logInRequest);
+        logInRequestDto = new LogInRequestDto("vonan@mail.de", "password12345");
+        responseEntity = authController.authenticateUser(logInRequestDto);
 
         assertNotNull(responseEntity.getBody());
         assertEquals("fail", responseEntity.getBody().getStatus());
