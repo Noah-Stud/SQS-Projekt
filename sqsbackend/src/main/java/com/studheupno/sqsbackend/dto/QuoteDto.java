@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.requests;
+package com.studheupno.sqsbackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

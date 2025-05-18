@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.requests.RequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

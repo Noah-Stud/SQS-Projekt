@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.requests;
+package com.studheupno.sqsbackend.dto;
 
 import com.studheupno.sqsbackend.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequestResponse {
-    
+
     private String email;
 
     public UserRequestResponse(UserEntity userEntity) {

@@ -1,14 +1,14 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.dto.CommentRequestResponse;
+import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.CommentRepo;
 import com.studheupno.sqsbackend.repo.MessageRepo;
 import com.studheupno.sqsbackend.repo.UserRepo;
-import com.studheupno.sqsbackend.requests.CommentRequestResponse;
-import com.studheupno.sqsbackend.requests.MessagesRequestResponse;
-import com.studheupno.sqsbackend.requests.RequestResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

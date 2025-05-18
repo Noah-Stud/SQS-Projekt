@@ -1,10 +1,10 @@
 package com.studheupno.sqsbackend.controller;
 
+import com.studheupno.sqsbackend.dto.LogInRequest;
+import com.studheupno.sqsbackend.dto.RegisterRequest;
+import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
-import com.studheupno.sqsbackend.requests.LogInRequest;
-import com.studheupno.sqsbackend.requests.RegisterRequest;
-import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

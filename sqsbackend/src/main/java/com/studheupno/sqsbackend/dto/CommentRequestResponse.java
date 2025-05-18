@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.requests;
+package com.studheupno.sqsbackend.dto;
 
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import lombok.Data;

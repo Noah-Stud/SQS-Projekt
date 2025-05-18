@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.service;
 
-import com.studheupno.sqsbackend.requests.QuoteDto;
+import com.studheupno.sqsbackend.dto.QuoteDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.client.RestClient;
 

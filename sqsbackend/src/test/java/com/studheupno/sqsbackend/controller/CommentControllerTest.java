@@ -1,9 +1,9 @@
 package com.studheupno.sqsbackend.controller;
 
+import com.studheupno.sqsbackend.dto.CommentRequest;
+import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
-import com.studheupno.sqsbackend.requests.CommentRequest;
-import com.studheupno.sqsbackend.requests.RequestResponse;
 import com.studheupno.sqsbackend.service.CommentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

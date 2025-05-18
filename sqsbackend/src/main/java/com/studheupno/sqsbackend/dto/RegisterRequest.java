@@ -1,11 +1,11 @@
-package com.studheupno.sqsbackend.requests;
+package com.studheupno.sqsbackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LogInRequest {
+public class RegisterRequest {
     private String email;
     private String password;
 }

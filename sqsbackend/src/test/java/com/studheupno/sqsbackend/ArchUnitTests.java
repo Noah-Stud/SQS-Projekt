@@ -31,7 +31,7 @@ public class ArchUnitTests {
     }
 
     @Test
-    public void packageContainmentTest () {
+    public void packageContainmentTest() {
         JavaClasses importedClasses = new ClassFileImporter().withImportOption(new ImportOption.DoNotIncludeTests()).importPackages("com.studheupno.sqsbackend");
 
         ArchRule rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Service").should().resideInAPackage("..service");
@@ -40,10 +40,22 @@ public class ArchUnitTests {
         rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Entity").should().resideInAPackage("..entity..");
         rule.check(importedClasses);
 
-        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Request").should().resideInAPackage("..requests");
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Request").should().resideInAPackage("..dto");
         rule.check(importedClasses);
 
-        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Response").should().resideInAPackage("..requests");
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Response").should().resideInAPackage("..dto");
+        rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Dto").should().resideInAPackage("..dto");
+        rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Filter").should().resideInAPackage("..filter");
+        rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Controller").should().resideInAPackage("..controller");
+        rule.check(importedClasses);
+
+        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Config").should().resideInAPackage("..config");
         rule.check(importedClasses);
     }
 }

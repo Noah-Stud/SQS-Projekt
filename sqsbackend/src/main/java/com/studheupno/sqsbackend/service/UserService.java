@@ -1,9 +1,9 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.UserRequestResponse;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
-import com.studheupno.sqsbackend.requests.RequestResponse;
-import com.studheupno.sqsbackend.requests.UserRequestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
