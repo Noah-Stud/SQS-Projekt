@@ -1,23 +1,15 @@
-# {Wahl von MySql als Datenbank}
+# Wahl von MySql als Datenbank
 
 ## Kontext und Problemdarstellung
 
-{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}
+Wie können die Daten (Nutzer, Nachrichten, Kommentare) permanent (auch bei Neustart der Anwendung) erhalten bleiben? Dabei muss es permanent möglich sein auf die Daten zuzugreifen und diese gegebenenfalls anzupassen.
 
 ## Mögliche Optionen
 
-* {title of option 1}
-* {title of option 2}
-* {title of option 3}
-* … <!-- numbers of options can vary -->
+* H2-Datenbank
+* MySql
+* MongoDB
 
 ## Entscheidung
 
-Chosen option: "{title of option 1}", because {justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force {force} | … | comes out best (see below)}.
-
-<!-- This is an optional element. Feel free to remove. -->
-### Konsequenzen
-
-* Good, because {positive consequence, e.g., improvement of one or more desired qualities, …}
-* Bad, because {negative consequence, e.g., compromising one or more desired qualities, …}
-* … <!-- numbers of consequences can vary -->
+Gewählte Option: "MySql", da es die Anforderungen an den permanenten Datenerhalt erfühlt, von Docker und SpringBoot unterstützt wird und von Entwicklerseite bereits Erfahrungen mit diesem Tool existieren. ein anderes Tool erfühlt alle diese Ansprüche.
