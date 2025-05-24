@@ -1,7 +1,6 @@
 package com.studheupno.sqsbackend.service;
 
 import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.CommentRequestResponse;
 import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.CommentEntity;
@@ -110,7 +109,7 @@ public class MessageService {
 
             responseObj.setStatus("success");
             responseObj.setMessage("Comment has been added to message");
-            responseObj.setPayload(new CommentRequestResponse(newComment));
+            responseObj.setPayload(null);
         }
         return responseObj;
     }

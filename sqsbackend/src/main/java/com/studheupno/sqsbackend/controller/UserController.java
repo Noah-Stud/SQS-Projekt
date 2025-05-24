@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +20,5 @@ public class UserController {
     @GetMapping("/getAll")
     public ResponseEntity<RequestResponse> findAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/getByEmail")
-    public ResponseEntity<RequestResponse> findByEmail(@RequestBody String inputEmail) {
-        return new ResponseEntity<>(userService.findByEmail(inputEmail), HttpStatus.OK);
     }
 }

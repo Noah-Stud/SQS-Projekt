@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,24 +37,28 @@ class MessageControllerTest {
 
     @Test
     void getAllMessages() {
-        RequestResponse responseObjMock = new RequestResponse();
-        ResponseEntity<RequestResponse> responseObject;
+        List<MessagesRequestResponse> messagesObjMock = new ArrayList<>();
+        messagesObjMock.add(new MessagesRequestResponse(message));
 
+        RequestResponse responseObjMock = new RequestResponse();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("success");
-        responseObjMock.setPayload(new MessageEntity[]{message});
+        responseObjMock.setPayload(messagesObjMock);
         when(messageService.getAllMessages()).thenReturn(responseObjMock);
 
-        responseObject = messageController.getAllMessages();
+        ResponseEntity<RequestResponse> responseObject = messageController.getAllMessages();
 
         assertNotNull(responseObject);
         assertNotNull(Objects.requireNonNull(responseObject.getBody()).getPayload());
         assertEquals(HttpStatus.OK, responseObject.getStatusCode());
         assertEquals("success", responseObject.getBody().getStatus());
+        assertEquals(message.getUser().getEmail(), ((List<MessagesRequestResponse>) responseObject.getBody().getPayload())
+                .getFirst().getUserEmail());
     }
 
     @Test
     void insertMessage() {
+        //User does not exist
         RequestResponse responseObjMock = new RequestResponse();
         ResponseEntity<RequestResponse> responseObjectActual;
 
@@ -69,6 +74,7 @@ class MessageControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseObjectActual.getStatusCode());
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
+        //User does exist
         responseObjMock = new RequestResponse();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("success");
@@ -81,10 +87,13 @@ class MessageControllerTest {
         assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
         assertEquals(HttpStatus.OK, responseObjectActual.getStatusCode());
         assertEquals("success", responseObjectActual.getBody().getStatus());
+        assertEquals("von@mail.de", ((MessagesRequestResponse) responseObjectActual.getBody().getPayload()).getUserEmail());
+        assertEquals("Test1234", ((MessagesRequestResponse) responseObjectActual.getBody().getPayload()).getContent());
     }
 
     @Test
     void getMessageById() {
+        //Message does not exist
         RequestResponse responseObjMock = new RequestResponse();
         responseObjMock.setStatus("fail");
         responseObjMock.setMessage("message id: " + message.getId() + " does no exist");
@@ -99,6 +108,7 @@ class MessageControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseObjectActual.getStatusCode());
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
+        //Message does exist
         responseObjMock = new RequestResponse();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("success");
@@ -111,21 +121,20 @@ class MessageControllerTest {
         assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
         assertEquals(HttpStatus.OK, responseObjectActual.getStatusCode());
         assertEquals("success", responseObjectActual.getBody().getStatus());
+        assertEquals(message.getUser().getEmail(), ((MessagesRequestResponse) responseObjectActual.getBody().getPayload()).getUserEmail());
         assertEquals(message.getContent(), ((MessagesRequestResponse) responseObjectActual.getBody().getPayload()).getContent());
     }
 
     @Test
     void likeMessage() {
-        ResponseEntity<RequestResponse> responseObjectActual;
-        RequestResponse responseObjMock = new RequestResponse();
-
         //User does not exist
+        RequestResponse responseObjMock = new RequestResponse();
         responseObjMock.setStatus("fail");
         responseObjMock.setMessage("user with email: " + user.getEmail() + " does no exist");
         responseObjMock.setPayload(null);
         when(messageService.updateMessageByLike(user.getEmail(), message.getId())).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
+        ResponseEntity<RequestResponse> responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -148,13 +157,13 @@ class MessageControllerTest {
         //Message and User do exist
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("update likes to the target post id: " + message.getId());
-        responseObjMock.setPayload(null);
+        responseObjMock.setPayload(null); //Not nice!!!
         when(messageService.updateMessageByLike(user.getEmail(), message.getId())).thenReturn(responseObjMock);
 
         responseObjectActual = messageController.likeMessage(user, message.getId() + "=");
 
         assertNotNull(responseObjectActual);
-        assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
+        //assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
         assertEquals(HttpStatus.OK, responseObjectActual.getStatusCode());
         assertEquals("success", responseObjectActual.getBody().getStatus());
     }

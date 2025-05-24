@@ -33,6 +33,7 @@ class CommentServiceTest {
 
     @Test
     void insertComment() {
+        //User does not exist
         when(userRepo.findByEmail("nicht@mail.de")).thenReturn(Optional.empty());
 
         RequestResponse response = commentService.insertComment(commentRequest, "nicht@mail.de");
@@ -46,7 +47,7 @@ class CommentServiceTest {
         RequestResponse responseObjMock = new RequestResponse();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("comment has been added to message");
-        //responseObjMock.setPayload(null);
+        responseObjMock.setPayload(null);
 
         when(userRepo.findByEmail("von@mail.de")).thenReturn(Optional.of(user));
         when(messageService.updateMessageByComment(commentRequest, user))
@@ -55,7 +56,7 @@ class CommentServiceTest {
         response = commentService.insertComment(commentRequest, user.getEmail());
 
         assertNotNull(response);
-        //assertNotNull(response.getPayload());
+        assertNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("comment has been added to message", response.getMessage());
     }

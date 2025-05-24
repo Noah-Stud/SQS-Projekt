@@ -1,12 +1,14 @@
 package com.studheupno.sqsbackend.dto;
 
 import com.studheupno.sqsbackend.entity.CommentEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Instant;
 
 
 @Data
+@AllArgsConstructor
 public class CommentRequestResponse {
 
     private String id;

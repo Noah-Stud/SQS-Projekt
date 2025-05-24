@@ -1,7 +1,6 @@
 package com.studheupno.sqsbackend.unittest.service;
 
 import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.CommentRequestResponse;
 import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.CommentEntity;
@@ -139,10 +138,9 @@ class MessageServiceTest {
         response = messageService.updateMessageByComment(commentRequest, commentUser);
 
         assertNotNull(response);
-        assertNotNull(response.getPayload());
+        assertNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("Comment has been added to message", response.getMessage());
-        assertEquals(new CommentRequestResponse(comment), response.getPayload());
     }
 
     @Test
@@ -171,7 +169,7 @@ class MessageServiceTest {
         //User and message do exist
         when(messageRepo.findById(message.getId())).thenReturn(Optional.of(message));
         when(userRepo.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        when(messageRepo.save(any(MessageEntity.class))).thenReturn(message);
+        when(messageRepo.save(any(MessageEntity.class))).thenReturn(message); //Not nice!!!
 
         response = messageService.updateMessageByLike(user.getEmail(), message.getId());
 

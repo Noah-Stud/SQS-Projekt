@@ -3,6 +3,7 @@ package com.studheupno.sqsbackend.unittest.controller;
 import com.studheupno.sqsbackend.controller.CommentController;
 import com.studheupno.sqsbackend.dto.CommentRequest;
 import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.service.CommentService;
@@ -36,6 +37,7 @@ class CommentControllerTest {
 
     @Test
     void insertComment() {
+        //User does not exist
         RequestResponse responseObjMock = new RequestResponse();
         ResponseEntity<RequestResponse> responseObjectActual;
 
@@ -51,6 +53,7 @@ class CommentControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseObjectActual.getStatusCode());
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
+        //Message does not exist
         responseObjMock = new RequestResponse();
         responseObjMock.setStatus("fail");
         responseObjMock.setMessage("cannot find message with id: " + message.getId());
@@ -64,17 +67,21 @@ class CommentControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseObjectActual.getStatusCode());
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
+        //User and Message do exist
+        message.getComments().add(new CommentEntity(commentRequest.getMessageId(), user,
+                commentRequest.getCommentContent(), Instant.now()));
         responseObjMock = new RequestResponse();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("comment has been added to message");
-        //responseObjMock.setPayload(null);
+        responseObjMock.setPayload(null);
         when(commentService.insertComment(commentRequest, user.getEmail())).thenReturn(responseObjMock);
 
         responseObjectActual = commentController.insertComment(user, commentRequest);
 
         assertNotNull(responseObjectActual);
-        //assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
+        assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
         assertEquals(HttpStatus.OK, responseObjectActual.getStatusCode());
         assertEquals("success", responseObjectActual.getBody().getStatus());
+        assertEquals("comment has been added to message", responseObjectActual.getBody().getMessage());
     }
 }

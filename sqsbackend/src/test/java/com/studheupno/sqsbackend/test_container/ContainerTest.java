@@ -102,22 +102,6 @@ public class ContainerTest {
         assertEquals("success", responseEntity.getBody().getStatus());
         assertEquals("success", responseEntity.getBody().getMessage());
         assertEquals(userRequestResponse, ((List<UserRequestResponse>) responseEntity.getBody().getPayload()).getFirst());
-
-
-        responseEntity = userController.findByEmail("vonan@mail.de");
-
-        assertNotNull(responseEntity.getBody());
-        assertEquals("success", responseEntity.getBody().getStatus());
-        assertEquals("success", responseEntity.getBody().getMessage());
-        assertEquals(userRequestResponse, responseEntity.getBody().getPayload());
-
-
-        responseEntity = userController.findByEmail("notexist@mail.de");
-
-        assertNotNull(responseEntity.getBody());
-        assertEquals("fail", responseEntity.getBody().getStatus());
-        assertEquals("User with email: " + "notexist@mail.de" + " not found",
-                responseEntity.getBody().getMessage());
     }
 
     @Test
@@ -134,7 +118,7 @@ public class ContainerTest {
         assertEquals(Lists.emptyList(), responseEntity.getBody().getPayload());
 
 
-        responseEntity = messageController.insertMessage(userDoesNotExist, "New message 1");
+        responseEntity = messageController.insertMessage(userDoesNotExist, "New message 1=");
 
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -142,7 +126,7 @@ public class ContainerTest {
         assertEquals("User with email: " + "von@mail.de" + " not found", responseEntity.getBody().getMessage());
 
 
-        responseEntity = messageController.insertMessage(userExist, "New message 1");
+        responseEntity = messageController.insertMessage(userExist, "New message 1=");
 
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -212,12 +196,9 @@ public class ContainerTest {
         responseEntity = commentController.insertComment(userExist, commentRequest);
 
         assertNotNull(responseEntity.getBody());
+        assertNull(responseEntity.getBody().getPayload());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("success", responseEntity.getBody().getStatus());
         assertEquals("Comment has been added to message", responseEntity.getBody().getMessage());
-        assertEquals(userExist.getEmail(), ((CommentRequestResponse) responseEntity.getBody()
-                .getPayload()).getUserEmail());
-        assertEquals(commentRequest.getCommentContent(), ((CommentRequestResponse) responseEntity.getBody()
-                .getPayload()).getContent());
     }
 }
