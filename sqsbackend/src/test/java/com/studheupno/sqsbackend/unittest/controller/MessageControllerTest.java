@@ -1,5 +1,6 @@
-package com.studheupno.sqsbackend.controller;
+package com.studheupno.sqsbackend.unittest.controller;
 
+import com.studheupno.sqsbackend.controller.MessageController;
 import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.MessageEntity;

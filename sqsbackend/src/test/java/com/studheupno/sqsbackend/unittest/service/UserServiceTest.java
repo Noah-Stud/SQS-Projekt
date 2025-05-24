@@ -1,9 +1,10 @@
-package com.studheupno.sqsbackend.service;
+package com.studheupno.sqsbackend.unittest.service;
 
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.dto.UserRequestResponse;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
+import com.studheupno.sqsbackend.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

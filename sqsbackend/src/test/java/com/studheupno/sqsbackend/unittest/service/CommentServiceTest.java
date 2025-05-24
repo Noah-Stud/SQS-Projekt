@@ -1,9 +1,11 @@
-package com.studheupno.sqsbackend.service;
+package com.studheupno.sqsbackend.unittest.service;
 
 import com.studheupno.sqsbackend.dto.CommentRequest;
 import com.studheupno.sqsbackend.dto.RequestResponse;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
+import com.studheupno.sqsbackend.service.CommentService;
+import com.studheupno.sqsbackend.service.MessageService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

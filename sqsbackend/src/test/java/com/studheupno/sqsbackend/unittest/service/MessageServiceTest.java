@@ -1,4 +1,4 @@
-package com.studheupno.sqsbackend.service;
+package com.studheupno.sqsbackend.unittest.service;
 
 import com.studheupno.sqsbackend.dto.CommentRequest;
 import com.studheupno.sqsbackend.dto.CommentRequestResponse;
@@ -10,6 +10,7 @@ import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.CommentRepo;
 import com.studheupno.sqsbackend.repo.MessageRepo;
 import com.studheupno.sqsbackend.repo.UserRepo;
+import com.studheupno.sqsbackend.service.MessageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
