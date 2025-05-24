@@ -57,6 +57,7 @@ public class AuthController {
     public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
 
         if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
+            logger.info("New user not created: Email {} is already in use!", registerRequestDto.getEmail());
             return new ResponseEntity<>(new RequestResponse("fail", "Error: Email is already in use!",
                     null), HttpStatus.BAD_REQUEST);
         }
@@ -64,7 +65,7 @@ public class AuthController {
         UserEntity user = new UserEntity(null, registerRequestDto.getEmail(),
                 encoder.encode(registerRequestDto.getPassword()), "");
         userRepository.save(user);
-
+        logger.info("New user created: {}", user.getEmail());
         return new ResponseEntity<>(new RequestResponse("success", "User registered successfully!",
                 null), HttpStatus.OK);
     }

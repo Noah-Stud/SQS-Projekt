@@ -20,6 +20,7 @@ public class MessageController {
     @PostMapping("/insert")
     public ResponseEntity<RequestResponse> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
                                                          @RequestBody String messageContent) {
+        messageContent = messageContent.substring(0, messageContent.length() - 1);
         RequestResponse messageResponse = messageService.insertMessage(userDetails.getUsername(), messageContent);
 
         if (messageResponse.getStatus().equals("fail")) {

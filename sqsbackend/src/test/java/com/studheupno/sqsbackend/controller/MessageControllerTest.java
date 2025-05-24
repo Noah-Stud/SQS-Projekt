@@ -61,7 +61,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(null);
         when(messageService.insertMessage(user.getEmail(), "Test1234")).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.insertMessage(user, "Test1234");
+        responseObjectActual = messageController.insertMessage(user, "Test1234=");
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -74,7 +74,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(new MessagesRequestResponse(message));
         when(messageService.insertMessage(user.getEmail(), "Test1234")).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.insertMessage(user, "Test1234");
+        responseObjectActual = messageController.insertMessage(user, "Test1234=");
 
         assertNotNull(responseObjectActual);
         assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
