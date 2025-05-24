@@ -1,5 +1,6 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.dto.CommentRequest;
 import com.studheupno.sqsbackend.dto.CommentRequestResponse;
 import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
 import com.studheupno.sqsbackend.dto.RequestResponse;
@@ -115,9 +116,13 @@ class MessageServiceTest {
     @Test
     void updateMessageByComment() {
         //Message does not exist
+        CommentRequest commentRequest = new CommentRequest("idNotExist", "New Comment");
+        UserEntity commentUser = new UserEntity("id2", "von2@mail.de", "1234", "user");
+
         when(messageRepo.findById("idNotExist")).thenReturn(Optional.empty());
 
-        RequestResponse response = messageService.updateMessageByComment("idNotExist", "New Comment");
+
+        RequestResponse response = messageService.updateMessageByComment(commentRequest, commentUser);
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -125,11 +130,12 @@ class MessageServiceTest {
         assertEquals("Message with id: " + "idNotExist" + " not found", response.getMessage());
 
         //Message does exist
-        when(messageRepo.findById(message.getId())).thenReturn(Optional.of(message));
-        when(commentRepo.save(any())).thenReturn(comment);
-        message.setContent("asafasaf");
+        commentRequest.setMessageId(message.getId());
 
-        response = messageService.updateMessageByComment(message.getId(), "New Comment");
+        when(messageRepo.findById(message.getId())).thenReturn(Optional.of(message));
+        when(commentRepo.save(new CommentEntity(null, user, "New Comment", any()))).thenReturn(comment);
+
+        response = messageService.updateMessageByComment(commentRequest, commentUser);
 
         assertNotNull(response);
         assertNotNull(response.getPayload());

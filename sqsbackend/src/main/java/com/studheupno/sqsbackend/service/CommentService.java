@@ -27,6 +27,6 @@ public class CommentService {
             responseObj.setPayload(null);
             return responseObj;
         }
-        return messageService.updateMessageByComment(inputCommentRequest.getMessageId(), inputCommentRequest.getCommentContent());
+        return messageService.updateMessageByComment(inputCommentRequest, optionalUserEntity.get());
     }
 }

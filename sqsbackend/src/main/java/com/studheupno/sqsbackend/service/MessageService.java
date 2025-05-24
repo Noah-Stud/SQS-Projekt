@@ -1,5 +1,6 @@
 package com.studheupno.sqsbackend.service;
 
+import com.studheupno.sqsbackend.dto.CommentRequest;
 import com.studheupno.sqsbackend.dto.CommentRequestResponse;
 import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
 import com.studheupno.sqsbackend.dto.RequestResponse;
@@ -84,18 +85,18 @@ public class MessageService {
         return responseObj;
     }
 
-    public RequestResponse updateMessageByComment(String inputMessageId, String inputCommentContent) {
+    public RequestResponse updateMessageByComment(CommentRequest inputCommentContent, UserEntity commentUser) {
         RequestResponse responseObj = new RequestResponse();
 
-        Optional<MessageEntity> optMessage = messageRepo.findById(inputMessageId);
+        Optional<MessageEntity> optMessage = messageRepo.findById(inputCommentContent.getMessageId());
         if (optMessage.isEmpty()) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("Message with id: " + inputMessageId + " not found");
+            responseObj.setMessage("Message with id: " + inputCommentContent.getMessageId() + " not found");
             responseObj.setPayload(null);
         } else {
             MessageEntity targetMessage = optMessage.get();
 
-            CommentEntity newComment = new CommentEntity(null, targetMessage.getUser(), inputCommentContent,
+            CommentEntity newComment = new CommentEntity(null, commentUser, inputCommentContent.getCommentContent(),
                     Instant.now());
             newComment = commentRepo.save(newComment);
 

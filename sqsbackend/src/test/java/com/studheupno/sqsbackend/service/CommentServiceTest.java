@@ -47,7 +47,7 @@ class CommentServiceTest {
         //responseObjMock.setPayload(null);
 
         when(userRepo.findByEmail("von@mail.de")).thenReturn(Optional.of(user));
-        when(messageService.updateMessageByComment(commentRequest.getMessageId(), commentRequest.getCommentContent()))
+        when(messageService.updateMessageByComment(commentRequest, user))
                 .thenReturn(responseObjMock);
 
         response = commentService.insertComment(commentRequest, user.getEmail());
