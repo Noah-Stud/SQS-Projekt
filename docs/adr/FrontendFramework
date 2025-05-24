@@ -1,0 +1,15 @@
+# Wahl eines Frameworks für das Frontend
+
+## Kontext und Problemdarstellung
+
+Es ist nicht sinvoll, den gesammten Code für das Frontend selber zu schreiben, da der Inhalt ...
+
+## Mögliche Optionen
+
+* Kein Framework (alles selber schreiben)
+* React
+* ...
+
+## Entscheidung
+
+Gewählte Option: "React", da es 
