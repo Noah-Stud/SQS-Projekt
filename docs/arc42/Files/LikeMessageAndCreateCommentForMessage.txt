@@ -1,0 +1,31 @@
+title Like message and create comment for message
+
+participant Max
+participant Frontend
+participant Backend
+participant Database
+
+Max->Frontend: Like message
+Frontend->Backend: Send Like-Request with token
+Backend->Backend: Check if token is valid
+Backend->Database: Check if user exists
+Backend<--Database: User does exist
+Backend->Database: Check if message exists
+Backend<--Database: Message does exist
+Backend->Database: Update like-list of message
+Backend<--Database: Return message
+Frontend<--Backend: Return message-response
+Max<--Frontend: Success
+
+Max->Frontend: Create comment for message
+Frontend->Backend: Send Comment-Request with token
+Backend->Backend: Check if token is valid
+Backend->Database: Check if user exists
+Backend<--Database: User does exist
+Backend->Database: Check if message exists
+Backend<--Database: Message does exist
+Backend->Backend: Create Comment
+Backend->Database: Save comment
+Backend<--Database: Success
+Frontend<--Backend: Success
+Max<--Frontend: Success

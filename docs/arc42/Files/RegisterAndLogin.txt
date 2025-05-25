@@ -1,0 +1,26 @@
+title Register and login
+
+participant Max
+participant Frontend
+participant Backend
+participant Database
+
+Max->Frontend: Send Register-Request with email and password
+Frontend->Frontend: Check for style conditions
+Frontend->Backend: Send Register-Request to Backend
+Backend->Database: Check if email already used
+Backend<--Database: user does not exist
+Backend->Database: Create and save new user
+Backend<--Database: success
+Frontend<--Backend: success
+Max<--Frontend: success
+
+Max->Frontend: Send Login-Request with email and password
+Frontend->Frontend: Check for style conditions
+Frontend->Backend: Send Login-Request to Backend
+Backend->Database: Check if user exists and password is correct
+Backend<--Database: password is correct
+Backend->Backend: Create token
+Frontend<--Backend: Return token
+Frontend->Frontend: Save token
+Max<--Frontend: Succesfull login

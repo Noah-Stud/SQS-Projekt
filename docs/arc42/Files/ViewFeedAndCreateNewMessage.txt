@@ -1,0 +1,28 @@
+title View feed and create new message
+
+participant Max
+participant Frontend
+participant Backend
+participant Database
+participant Quote-Service
+
+Max->Frontend: Open FeedView
+Frontend->Backend: Send getAllMessages-Request (with token)
+Backend->Database: Get all Messages as a list
+Backend<--Database: return list of messages
+Backend->Backend: create list of message-responses
+Frontend<--Backend: return list of message-responses
+Max<--Frontend: show feed with messages
+
+Max->Frontend: Create new message with contend
+Frontend->Frontend: Check for style conditions
+Frontend->Backend: Send CreateMessage-Request with token
+Backend->Backend: Check if token is valid
+Backend->Database: Check if user exists
+Backend<--Database: user does exist
+Backend->Quote-Service: Request quote
+Backend<--Quote-Service: Return quote
+Backend->Database: Create and save new message
+Backend<--Database: Return message
+Frontend<--Backend: Return message-response
+Max<--Frontend: Success
