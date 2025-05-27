@@ -80,7 +80,7 @@ function MessageCompose() {
 
     async function handleCreateMessage(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        createMessage(messageContent);
+        void createMessage(messageContent);
         dispatch(getMessages());
     }
 

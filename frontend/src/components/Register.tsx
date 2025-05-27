@@ -20,7 +20,7 @@ interface SignUpData {
 }
 
 function SignUp() {
-    const [resData, setResData] = useState<any>(null);
+    const [, setResData] = useState<unknown>(null);
 
     let navigate = useNavigate();
 
@@ -76,17 +76,15 @@ function SignUp() {
                     password: ""
                 }}
                 onSubmit={(values, { setSubmitting }) => {
-                    postSignUpInfo(values);
+                    void postSignUpInfo(values);
                     setSubmitting(false);
                 }}
             >
                 {({
                     handleSubmit,
                     handleChange,
-                    handleBlur,
                     values,
                     touched,
-                    isValid,
                     errors,
                 }) => (
                     <Form

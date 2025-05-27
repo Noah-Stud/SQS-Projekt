@@ -77,10 +77,10 @@ export const messageSlice = createSlice({
                     if (state.messages[i].id === action.payload.messageId) {
                         if (!state.messages[i].likes.includes(action.payload.userEmail)) {
                             state.messages[i].likes.push(action.payload.userEmail);
-                            updateLike(action.payload.messageId);
+                            void updateLike(action.payload.messageId);
                         } else {
                             state.messages[i].likes = state.messages[i].likes.filter(item => item !== action.payload.userEmail);
-                            updateLike(action.payload.messageId);
+                            void updateLike(action.payload.messageId);
                         }
                     }
                 }

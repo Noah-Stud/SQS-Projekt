@@ -21,11 +21,11 @@ import styles from "./styles/MessageItem.module.css";
 interface MessageItemProp {
     id: string;
     userEmail: string;
-    content: any;
+    content: string;
     comments: CommentItem[];
-    likes: any[];
-    createdAt: any;
-    quote: any;
+    likes: string[];
+    createdAt: unknown;
+    quote: string;
 }
 
 interface CommentItem {
@@ -48,7 +48,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
     );
     const [messageId] = useState<string>(props.id);
 
-    function handleLikeClick(e: React.MouseEvent<HTMLButtonElement>) {
+    function handleLikeClick() {
         if (currentUserEmail && !props.likes.includes(currentUserEmail)) {
             setLikeStatus(true);
             dispatch(addLike({ messageId: messageId, userEmail: currentUserEmail }));
@@ -58,7 +58,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
         }
     }
 
-    function handleCommentButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+    function handleCommentButtonClick() {
         setCommentStatus(!commentStatus);
     }
 
@@ -74,7 +74,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
         }
     }
 
-    function sendComment(e: React.MouseEvent<HTMLButtonElement>) {
+    function sendComment() {
         if (currentUserEmail) {
             dispatch(
                 addComment({
@@ -138,7 +138,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                 </div>
 
                 {/* List of comments and comment input box */}
-                {commentStatus === true ? (
+                {commentStatus ? (
                     <div className="mt-3">
                         <div className="d-flex align-items-center">
                             <Form className="w-100 mx-1">

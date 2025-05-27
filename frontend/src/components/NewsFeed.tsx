@@ -13,11 +13,11 @@ import styles from "./styles/NewsFeed.module.css";
 interface Message {
     id: string;
     userEmail: string;
-    content: any;
+    content: string;
     comments: Comment[];
-    likes: any[];
-    createdAt: any;
-    quote: any;
+    likes: string[];
+    createdAt: unknown;
+    quote: string;
 }
 
 interface Comment {

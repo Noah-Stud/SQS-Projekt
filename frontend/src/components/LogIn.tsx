@@ -14,7 +14,7 @@ interface InputData {
 }
 
 const LogIn: React.FC = () => {
-    const [resData, setResData] = useState<any>(null);
+    const [, setResData] = useState<unknown>(null);
     const navigate = useNavigate();
 
     const schema = yup.object().shape({
@@ -34,7 +34,7 @@ const LogIn: React.FC = () => {
             });
 
             if (response.data !== null && response.data.status === "fail") {
-                showWarningToast(response.data.message);
+                showWarningToast();
                 console.log("unseccesfull login");
             }
 
@@ -52,7 +52,7 @@ const LogIn: React.FC = () => {
         }
     };
 
-    const showWarningToast = (inputMessage: string) => {
+    const showWarningToast = () => {
         toast.warn("Invalid email or password", {
             position: "bottom-center",
             autoClose: 3000,
@@ -76,17 +76,15 @@ const LogIn: React.FC = () => {
                     password: "",
                 }}
                 onSubmit={(values, { setSubmitting }) => {
-                    postSignInInfo(values);
+                    void postSignInInfo(values);
                     setSubmitting(false);
                 }}
             >
                 {({
                     handleSubmit,
                     handleChange,
-                    handleBlur,
                     values,
                     touched,
-                    isValid,
                     errors,
                 }) => (
                     <Form
