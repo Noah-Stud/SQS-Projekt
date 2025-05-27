@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * Rest-Controller that is responsable for Comment-Related-Requests
+ */
 @RestController
 @RequestMapping("/api/comment/v1")
 public class CommentController {
@@ -20,6 +24,13 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * Post-Request (/api/comment/v1/create) that creates a new Comment for a given messageId
+     *
+     * @param userDetails   UserDetails found in jwt-Token
+     * @param postedComment Request containing Comment and messageId
+     * @return RequestResponse containing a list of UserRequestResponses
+     */
     @PostMapping("/create")
     public ResponseEntity<RequestResponse> insertComment(@AuthenticationPrincipal UserDetails userDetails,
                                                          @RequestBody CommentRequest postedComment) {

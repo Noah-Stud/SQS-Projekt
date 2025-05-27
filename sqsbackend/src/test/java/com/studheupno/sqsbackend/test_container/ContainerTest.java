@@ -119,7 +119,7 @@ public class ContainerTest {
         assertEquals("success", responseEntity.getBody().getMessage());
         assertEquals(Lists.emptyList(), responseEntity.getBody().getPayload());
 
-
+        //User does not exist -> Message not created
         responseEntity = messageController.insertMessage(userDoesNotExist, "New message 1=");
 
         assertNotNull(responseEntity.getBody());
@@ -127,7 +127,7 @@ public class ContainerTest {
         assertEquals("fail", responseEntity.getBody().getStatus());
         assertEquals("User with email: " + "von@mail.de" + " not found", responseEntity.getBody().getMessage());
 
-        //Message created
+        //User does exist -> Message created
         responseEntity = messageController.insertMessage(userExist, "New message 1=");
 
         assertNotNull(responseEntity.getBody());
@@ -165,9 +165,17 @@ public class ContainerTest {
         assertEquals("success", responseEntity.getBody().getStatus());
         assertEquals("success", responseEntity.getBody().getMessage());
         assertEquals(existingMessage, responseEntity.getBody().getPayload());
+    }
+
+    @Test
+    @Order(4)
+    void likeMessageTest() {
+        UserEntity userExist = new UserEntity(null, "vonan@mail.de", "1234", "user");
+        String existingMessageId = ((List<MessagesRequestResponse>) messageController.getAllMessages()
+                .getBody().getPayload()).getFirst().getId();
 
         //Message does not exist
-        responseEntity = messageController.likeMessage(userExist, "Id does not exist=");
+        ResponseEntity<RequestResponse> responseEntity = messageController.likeMessage(userExist, "Id does not exist=");
 
         assertNotNull(responseEntity.getBody());
         assertNull(responseEntity.getBody().getPayload());
@@ -175,17 +183,17 @@ public class ContainerTest {
         assertEquals("Message with id: Id does not exist not found", responseEntity.getBody().getMessage());
 
         //Message does exist
-        responseEntity = messageController.likeMessage(userExist, existingMessage.getId() + "=");
+        responseEntity = messageController.likeMessage(userExist, existingMessageId + "=");
 
         assertNotNull(responseEntity.getBody());
         assertEquals("success", responseEntity.getBody().getStatus());
-        assertEquals("update likes to the target post id: " + existingMessage.getId(), responseEntity.getBody().getMessage());
+        assertEquals("update likes to the target post id: " + existingMessageId, responseEntity.getBody().getMessage());
         assertTrue(((MessagesRequestResponse) responseEntity.getBody().getPayload()).getLikes()
                 .contains(userExist.getEmail()));
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void commentTest() {
         //User does not exist
         UserEntity userDoesNotExist = new UserEntity(null, "von@mail.de", "1234", "user");

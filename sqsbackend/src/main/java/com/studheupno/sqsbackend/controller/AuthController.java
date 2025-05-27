@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * Rest-Controller that is responsable for Authentication-Related-Requests
+ */
 @RestController
 @RequestMapping("/api/auth/v1")
 public class AuthController {
@@ -36,6 +40,12 @@ public class AuthController {
     @Autowired
     UserRepo userRepository;
 
+    /**
+     * A Post-Request (/api/auth/v1/login) that allows a user to log in with his email and password to get a jwt-Token
+     *
+     * @param loginRequestDto Request containing an email and a password
+     * @return RequestResponse containing an jwt-Token (if successful)
+     */
     @PostMapping("/login")
     public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
         logger.info(loginRequestDto.getEmail());
@@ -53,6 +63,12 @@ public class AuthController {
         }
     }
 
+    /**
+     * A Post-Request (/api/auth/v1/register) that allows to create a new user with an unused email-address
+     *
+     * @param registerRequestDto Request containing an email and a password
+     * @return RequestResponse (if successful)
+     */
     @PostMapping("/register")
     public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
 

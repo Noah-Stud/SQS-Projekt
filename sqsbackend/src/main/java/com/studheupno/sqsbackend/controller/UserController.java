@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+/**
+ * Rest-Controller that is responsable for User-Related-Requests (not for Authentication)
+ */
 @RestController
 @RequestMapping("/api/user/v1")
 public class UserController {
@@ -17,6 +20,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Get-Request (/api/user/v1/getAll) that returns all user in the database
+     *
+     * @return RequestResponse containing a list of UserRequestResponses
+     */
     @GetMapping("/getAll")
     public ResponseEntity<RequestResponse> findAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
