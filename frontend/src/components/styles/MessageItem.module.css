@@ -1,0 +1,15 @@
+.likeButton {
+
+}
+
+.commentButton {
+
+}
+
+.likeButton:hover {
+    cursor: pointer;
+}
+
+.commentButton:hover {
+    cursor: pointer;
+}
