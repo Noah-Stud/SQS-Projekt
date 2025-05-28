@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+/**
+ * Service that is responsible for actions involving jwt-tokens.
+ */
 @Component
 public class JwtService {
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
@@ -26,6 +29,12 @@ public class JwtService {
     @Value("${jwtExpirationMs}")
     private int jwtExpirationMs;
 
+    /**
+     * Generates a jwt-token using a given Authentication
+     *
+     * @param authentication authentication to be used
+     * @return jwt-token
+     */
     public String generateJwtToken(Authentication authentication) {
 
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
@@ -42,11 +51,23 @@ public class JwtService {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
+    /**
+     * Extracts the UserName (Email) of the owner of the jwt-token.
+     *
+     * @param token The jwt-token
+     * @return UserName (Email)
+     */
     public String getUsernameFromToken(String token) {
         return Jwts.parser().verifyWith(key()).build()
                 .parseSignedClaims(token).getPayload().getSubject();
     }
 
+    /**
+     * Checks if the given jwt-token is valid. If not, the corresponding Exception is logged and false is returned.
+     *
+     * @param authToken The jwt-token
+     * @return true if valid, false if not
+     */
     public boolean isTokenValid(String authToken) {
         try {
             Jwts.parser().verifyWith(key()).build().parse(authToken);

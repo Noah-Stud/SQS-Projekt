@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+/**
+ * Service that is responsible for actions involving Comments.
+ */
 @Service
 public class CommentService {
 
@@ -17,6 +21,13 @@ public class CommentService {
     @Autowired
     private MessageService messageService;
 
+    /**
+     * Creates a new Comment as a specific User for a specific Message.
+     *
+     * @param inputCommentRequest Contains the Message for which the Comment is to be created and the Comments content
+     * @param inputUserEmail      User for which the Comment is to be created
+     * @return RequestResponse
+     */
     public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputUserEmail) {
         Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(inputUserEmail);
 

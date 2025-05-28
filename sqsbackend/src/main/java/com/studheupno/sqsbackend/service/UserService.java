@@ -13,12 +13,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+/**
+ * Service that is responsible for actions involving Users.
+ */
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepo userRepo;
 
+    /**
+     * Returns all Users (List<UserRequestResponse>) that are saved in the database as a RequestResponse.
+     *
+     * @return UserRequestResponse of all Users
+     */
     public RequestResponse findAll() {
         RequestResponse responseObj = new RequestResponse();
         responseObj.setStatus("success");
@@ -27,6 +36,12 @@ public class UserService implements UserDetailsService {
         return responseObj;
     }
 
+    /**
+     * Returns User (UserRequestResponse) belonging to the given Email-Address as a RequestResponse.
+     *
+     * @param email Email-Address of the User.
+     * @return RequestResponse
+     */
     public RequestResponse findByEmail(String email) {
         RequestResponse responseObj = new RequestResponse();
         Optional<UserEntity> optUser = userRepo.findByEmail(email);
@@ -44,6 +59,12 @@ public class UserService implements UserDetailsService {
         return responseObj;
     }
 
+    /**
+     * Returns UserDetails belonging to the given Email-Address.
+     *
+     * @param email Email-Address of the User.
+     * @return UserDetails
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<UserEntity> optUser = userRepo.findByEmail(email);

@@ -2,8 +2,6 @@ package com.studheupno.sqsbackend.config;
 
 import com.studheupno.sqsbackend.filter.BearerTokenFilter;
 import com.studheupno.sqsbackend.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,19 +24,25 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-
+/**
+ * Configuration the is Responsible for the SpringBoot-Security
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
-
     @Autowired
     BearerTokenFilter bearerTokenFilter;
 
+    /**
+     * Creats the AuthenticationManager.
+     *
+     * @param userDetailsService UserService
+     * @param passwordEncoder    PasswordEncoder
+     * @return AuthenticationManager
+     */
     @Bean
     public AuthenticationManager authenticationManager(UserService userDetailsService, PasswordEncoder passwordEncoder) {
-        logger.info("Creating authentication Manager");
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -46,6 +50,11 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider);
     }
 
+    /**
+     * Sets the Cors-Rules. Only allows Cross-Origin from "<a href="https://localhost:3000/">...</a>*"
+     *
+     * @return Cors-Configuration
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -55,6 +64,12 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Creates the SecurityFilterChain.
+     *
+     * @param http HttpSecurity
+     * @return SecurityFilterChain
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
