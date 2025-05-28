@@ -1,5 +1,6 @@
 package com.studheupno.sqsbackend.unittest.service;
 
+import com.studheupno.sqsbackend.dto.QuoteDto;
 import com.studheupno.sqsbackend.service.QuoteService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,31 +9,38 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestClient;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class QuoteServiceTest {
 
-    @Mock
+    @Mock(answer = RETURNS_DEEP_STUBS)
     RestClient restClient;
     @InjectMocks
     QuoteService quoteService;
 
     @Test
     void getQuote() {
-        //User does not exist
-//        RestClient.RequestBodyUriSpec requestBodyUriSpec = mock(RestClient.RequestBodyUriSpec.class);
-//        RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
-//
-//        when(restClient.get()).thenReturn(requestBodyUriSpec);
-//        when(requestBodyUriSpec.headers(any())).thenReturn(requestBodySpec);
-//        when(restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class))
-//                .thenReturn(null);
-//
-//        String response = quoteService.getQuote();
-//
-//        assertNotNull(response);
-//        assertEquals("No data found", response);
+        //Not Quote returned from API
+        when(restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class))
+                .thenReturn(null);
 
-        //User exist
+        String quote = quoteService.getQuote();
+        assertNotNull(quote);
+        assertEquals("No data found", quote);
+
+        //Quote returned from API
+        QuoteDto quoteDto = new QuoteDto("quote", "author", "h");
+
+        when(restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class))
+                .thenReturn(new QuoteDto[]{quoteDto});
+
+        quote = quoteService.getQuote();
+        assertNotNull(quote);
+        assertEquals("quote \n author", quote);
     }
 }
