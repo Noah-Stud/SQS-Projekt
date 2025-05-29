@@ -42,7 +42,7 @@ function NewsFeedContent() {
             <h1>NewsFeed</h1> 
             <Link to="/">Homepage</Link>
             <MessageCompose />
-            {storeMessages !== null && storeMessages.length > 0 ? (
+            {storeMessages.length > 0 ? (
                 storeMessages.map((message: Message) => {
                     return (
                         <MessageItem

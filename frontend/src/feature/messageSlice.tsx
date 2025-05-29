@@ -27,7 +27,7 @@ const initialState: InitialState = {
 
 export const getMessages = createAsyncThunk(
     "Messages/getAllMessages",
-    async (thunkAPI) => {
+    async () => {
         const response = await axios({
             method: "get",
             url: "/api/message/v1/getAll",
@@ -73,13 +73,13 @@ export const messageSlice = createSlice({
     reducers: {
         addLike: (state, action: { payload: AddLikePayload }) => {
             if (state.messages !== null) {
-                for (let i = 0; i < state.messages.length; i++) {
-                    if (state.messages[i].id === action.payload.messageId) {
-                        if (!state.messages[i].likes.includes(action.payload.userEmail)) {
-                            state.messages[i].likes.push(action.payload.userEmail);
+                for (let message of state.messages) {
+                    if (message.id === action.payload.messageId) {
+                        if (!message.likes.includes(action.payload.userEmail)) {
+                            message.likes.push(action.payload.userEmail);
                             void updateLike(action.payload.messageId);
                         } else {
-                            state.messages[i].likes = state.messages[i].likes.filter(item => item !== action.payload.userEmail);
+                            message.likes = message.likes.filter(item => item !== action.payload.userEmail);
                             void updateLike(action.payload.messageId);
                         }
                     }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
-import { Hashicon } from "@emeraldpay/hashicon-react";
+//import { Hashicon } from "@emeraldpay/hashicon-react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
