@@ -36,6 +36,14 @@ public class MessageService {
     private final QuoteService quoteService = new QuoteService(RestClient.create());
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
+    /**
+     * Create new Message for a specific User.
+     * If the User does not exist, no Message is created.
+     *
+     * @param userEmail    User who creates the Message
+     * @param inputContent Content of Message
+     * @return RequestResponseDto containing MessageResponseDto of the new Message or failure-message.
+     */
     public RequestResponseDto insertMessage(String userEmail, String inputContent) {
         logger.info("Trying to insert message for user: {}", userEmail);
         Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(userEmail);
@@ -60,6 +68,13 @@ public class MessageService {
         return responseObj;
     }
 
+    /**
+     * Returns Message with the corresponding ID.
+     * If the User does not exist, no Message is returned.
+     *
+     * @param id ID of the searched Message
+     * @return RequestResponseDto containing MessageResponseDto of the found Message or failure-message.
+     */
     public RequestResponseDto getMessageById(String id) {
         RequestResponseDto responseObj = new RequestResponseDto();
         Optional<MessageEntity> optMessage = messageRepo.findById(id);
@@ -76,6 +91,11 @@ public class MessageService {
         return responseObj;
     }
 
+    /**
+     * Returns all Messages saved in Database as a List.
+     *
+     * @return RequestResponseDto containing List<MessageResponseDto> of all Messages.
+     */
     public RequestResponseDto getAllMessages() {
         RequestResponseDto responseObj = new RequestResponseDto();
         List<MessageEntity> messages = messageRepo.findAll();
@@ -86,6 +106,14 @@ public class MessageService {
         return responseObj;
     }
 
+    /**
+     * Creates new Comment for a specific User under a specific Message.
+     * If the Message does not exist, nothing is done.
+     *
+     * @param inputCommentContent Contains Comment and MessageId
+     * @param commentUser         User
+     * @return RequestResponseDto with success- or failure-message
+     */
     public RequestResponseDto updateMessageByComment(CommentRequestDto inputCommentContent, UserEntity commentUser) {
         RequestResponseDto responseObj = new RequestResponseDto();
 
@@ -116,6 +144,14 @@ public class MessageService {
         return responseObj;
     }
 
+    /**
+     * Add or delete Like of a specific User from a specific Message.
+     * If the Message or the User does not exist, nothing is done.
+     *
+     * @param userEmail Email of the User
+     * @param messageId ID of the Message
+     * @return RequestResponseDto with success- or failure-message
+     */
     public RequestResponseDto updateMessageByLike(String userEmail, String messageId) {
         RequestResponseDto responseObj = new RequestResponseDto();
 
@@ -141,6 +177,15 @@ public class MessageService {
         }
     }
 
+    /**
+     * Adds or deletes User from the LikeList of the Message.
+     * If the User is not on the List, he is added
+     * If he is already on the List, he is deleted from it.
+     *
+     * @param messageEntity The Message to be updated
+     * @param userEntity    The User to add or delete from the LikeList
+     * @return RequestResponseDto containing the MessageResponseDto of the updated Message
+     */
     private RequestResponseDto updateLikeList(MessageEntity messageEntity, UserEntity userEntity) {
         RequestResponseDto responseObj = new RequestResponseDto();
 
