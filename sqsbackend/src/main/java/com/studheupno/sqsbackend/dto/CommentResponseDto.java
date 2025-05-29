@@ -9,14 +9,14 @@ import java.time.Instant;
 
 @Data
 @AllArgsConstructor
-public class CommentRequestResponse {
+public class CommentResponseDto {
 
     private String id;
     private String userEmail;
     private String content;
     private Instant createdAt;
 
-    public CommentRequestResponse(CommentEntity commentEntity) {
+    public CommentResponseDto(CommentEntity commentEntity) {
         this.id = commentEntity.getId();
         this.userEmail = commentEntity.getUser().getEmail();
         this.content = commentEntity.getContent();

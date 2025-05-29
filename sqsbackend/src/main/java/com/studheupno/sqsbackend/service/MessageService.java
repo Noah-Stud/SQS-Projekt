@@ -1,8 +1,8 @@
 package com.studheupno.sqsbackend.service;
 
-import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.CommentRequestDto;
+import com.studheupno.sqsbackend.dto.MessageResponseDto;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Service that is responsible for actions involving Messages.
+ */
 @Service
 public class MessageService {
 
@@ -34,11 +36,11 @@ public class MessageService {
     private final QuoteService quoteService = new QuoteService(RestClient.create());
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
-    public RequestResponse insertMessage(String userEmail, String inputContent) {
+    public RequestResponseDto insertMessage(String userEmail, String inputContent) {
         logger.info("Trying to insert message for user: {}", userEmail);
         Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(userEmail);
         if (optionalUserEntity.isEmpty()) {
-            RequestResponse responseObj = new RequestResponse();
+            RequestResponseDto responseObj = new RequestResponseDto();
             responseObj.setStatus("fail");
             responseObj.setMessage("User with email: " + userEmail + " not found");
             responseObj.setPayload(null);
@@ -51,15 +53,15 @@ public class MessageService {
         newMessage = messageRepo.save(newMessage);
         logger.info("Message for user: {} was created", userEmail);
 
-        RequestResponse responseObj = new RequestResponse();
+        RequestResponseDto responseObj = new RequestResponseDto();
         responseObj.setStatus("success");
         responseObj.setMessage("success");
-        responseObj.setPayload(new MessagesRequestResponse(newMessage));
+        responseObj.setPayload(new MessageResponseDto(newMessage));
         return responseObj;
     }
 
-    public RequestResponse getMessageById(String id) {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto getMessageById(String id) {
+        RequestResponseDto responseObj = new RequestResponseDto();
         Optional<MessageEntity> optMessage = messageRepo.findById(id);
 
         if (optMessage.isEmpty()) {
@@ -69,23 +71,23 @@ public class MessageService {
         } else {
             responseObj.setStatus("success");
             responseObj.setMessage("success");
-            responseObj.setPayload(new MessagesRequestResponse(optMessage.get()));
+            responseObj.setPayload(new MessageResponseDto(optMessage.get()));
         }
         return responseObj;
     }
 
-    public RequestResponse getAllMessages() {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto getAllMessages() {
+        RequestResponseDto responseObj = new RequestResponseDto();
         List<MessageEntity> messages = messageRepo.findAll();
 
         responseObj.setStatus("success");
         responseObj.setMessage("success");
-        responseObj.setPayload(messages.stream().map(MessagesRequestResponse::new).toList());
+        responseObj.setPayload(messages.stream().map(MessageResponseDto::new).toList());
         return responseObj;
     }
 
-    public RequestResponse updateMessageByComment(CommentRequest inputCommentContent, UserEntity commentUser) {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto updateMessageByComment(CommentRequestDto inputCommentContent, UserEntity commentUser) {
+        RequestResponseDto responseObj = new RequestResponseDto();
 
         Optional<MessageEntity> optMessage = messageRepo.findById(inputCommentContent.getMessageId());
         if (optMessage.isEmpty()) {
@@ -114,8 +116,8 @@ public class MessageService {
         return responseObj;
     }
 
-    public RequestResponse updateMessageByLike(String userEmail, String messageId) {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto updateMessageByLike(String userEmail, String messageId) {
+        RequestResponseDto responseObj = new RequestResponseDto();
 
         Optional<MessageEntity> optMessage = messageRepo.findById(messageId);
         if (optMessage.isEmpty()) {
@@ -128,7 +130,7 @@ public class MessageService {
             Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(userEmail);
             if (optionalUserEntity.isEmpty()) {
                 logger.info("Error: cannot find user with email: {}", userEmail);
-                responseObj = new RequestResponse();
+                responseObj = new RequestResponseDto();
                 responseObj.setStatus("fail");
                 responseObj.setMessage("User with email: " + userEmail + " not found");
                 responseObj.setPayload(null);
@@ -139,8 +141,8 @@ public class MessageService {
         }
     }
 
-    private RequestResponse updateLikeList(MessageEntity messageEntity, UserEntity userEntity) {
-        RequestResponse responseObj = new RequestResponse();
+    private RequestResponseDto updateLikeList(MessageEntity messageEntity, UserEntity userEntity) {
+        RequestResponseDto responseObj = new RequestResponseDto();
 
         List<UserEntity> likesList = messageEntity.getLikes();
         if (likesList == null) {
@@ -159,7 +161,7 @@ public class MessageService {
 
         responseObj.setStatus("success");
         responseObj.setMessage("update likes to the target post id: " + messageEntity.getId());
-        responseObj.setPayload(new MessagesRequestResponse(messageEntity));
+        responseObj.setPayload(new MessageResponseDto(messageEntity));
         return responseObj;
     }
 }

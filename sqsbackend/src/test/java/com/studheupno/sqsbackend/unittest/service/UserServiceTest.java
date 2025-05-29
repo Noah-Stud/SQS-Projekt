@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.unittest.service;
 
-import com.studheupno.sqsbackend.dto.RequestResponse;
-import com.studheupno.sqsbackend.dto.UserRequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
+import com.studheupno.sqsbackend.dto.UserResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.service.UserService;
@@ -46,12 +46,12 @@ class UserServiceTest {
     void findAll() {
         when(userRepo.findAll()).thenReturn(List.of(user));
 
-        RequestResponse response = userService.findAll();
+        RequestResponseDto response = userService.findAll();
 
         assertNotNull(response);
         assertNotNull(response.getPayload());
         assertEquals("success", response.getStatus());
-        assertEquals(new UserRequestResponse(user), ((List<?>) response.getPayload()).getFirst());
+        assertEquals(new UserResponseDto(user), ((List<?>) response.getPayload()).getFirst());
     }
 
     @Test
@@ -59,7 +59,7 @@ class UserServiceTest {
         //User does not exist
         when(userRepo.findByEmail("nicht@mail.de")).thenReturn(Optional.empty());
 
-        RequestResponse response = userService.findByEmail("nicht@mail.de");
+        RequestResponseDto response = userService.findByEmail("nicht@mail.de");
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -75,7 +75,7 @@ class UserServiceTest {
         assertNotNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("success", response.getMessage());
-        assertEquals(new UserRequestResponse(user), response.getPayload());
+        assertEquals(new UserResponseDto(user), response.getPayload());
     }
 
     @Test

@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestResponse {
+public class RequestResponseDto {
     private String status;
     private String message;
     private Object payload;

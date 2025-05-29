@@ -1,8 +1,8 @@
 package com.studheupno.sqsbackend.unittest.controller;
 
 import com.studheupno.sqsbackend.controller.CommentController;
-import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.CommentRequestDto;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
@@ -33,20 +33,20 @@ class CommentControllerTest {
     private final UserEntity user = new UserEntity("id1", "von@mail.de", "1234", "user");
     private final MessageEntity message = new MessageEntity("id1", user, "Test1234", Instant.now(),
             "Quote", new ArrayList<>(), new ArrayList<>());
-    private final CommentRequest commentRequest = new CommentRequest(message.getId(), "Test-Comment");
+    private final CommentRequestDto commentRequestDto = new CommentRequestDto(message.getId(), "Test-Comment");
 
     @Test
     void insertComment() {
         //User does not exist
-        RequestResponse responseObjMock = new RequestResponse();
-        ResponseEntity<RequestResponse> responseObjectActual;
+        RequestResponseDto responseObjMock = new RequestResponseDto();
+        ResponseEntity<RequestResponseDto> responseObjectActual;
 
         responseObjMock.setStatus("fail");
         responseObjMock.setMessage("User with email: " + user.getEmail() + " not found");
         responseObjMock.setPayload(null);
-        when(commentService.insertComment(commentRequest, user.getEmail())).thenReturn(responseObjMock);
+        when(commentService.insertComment(commentRequestDto, user.getEmail())).thenReturn(responseObjMock);
 
-        responseObjectActual = commentController.insertComment(user, commentRequest);
+        responseObjectActual = commentController.insertComment(user, commentRequestDto);
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -54,13 +54,13 @@ class CommentControllerTest {
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
         //Message does not exist
-        responseObjMock = new RequestResponse();
+        responseObjMock = new RequestResponseDto();
         responseObjMock.setStatus("fail");
         responseObjMock.setMessage("cannot find message with id: " + message.getId());
         responseObjMock.setPayload(null);
-        when(commentService.insertComment(commentRequest, user.getEmail())).thenReturn(responseObjMock);
+        when(commentService.insertComment(commentRequestDto, user.getEmail())).thenReturn(responseObjMock);
 
-        responseObjectActual = commentController.insertComment(user, commentRequest);
+        responseObjectActual = commentController.insertComment(user, commentRequestDto);
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -68,15 +68,15 @@ class CommentControllerTest {
         assertEquals("fail", responseObjectActual.getBody().getStatus());
 
         //User and Message do exist
-        message.getComments().add(new CommentEntity(commentRequest.getMessageId(), user,
-                commentRequest.getCommentContent(), Instant.now()));
-        responseObjMock = new RequestResponse();
+        message.getComments().add(new CommentEntity(commentRequestDto.getMessageId(), user,
+                commentRequestDto.getCommentContent(), Instant.now()));
+        responseObjMock = new RequestResponseDto();
         responseObjMock.setStatus("success");
         responseObjMock.setMessage("comment has been added to message");
         responseObjMock.setPayload(null);
-        when(commentService.insertComment(commentRequest, user.getEmail())).thenReturn(responseObjMock);
+        when(commentService.insertComment(commentRequestDto, user.getEmail())).thenReturn(responseObjMock);
 
-        responseObjectActual = commentController.insertComment(user, commentRequest);
+        responseObjectActual = commentController.insertComment(user, commentRequestDto);
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());

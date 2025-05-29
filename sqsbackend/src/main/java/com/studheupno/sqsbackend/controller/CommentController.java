@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.CommentRequestDto;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +32,9 @@ public class CommentController {
      * @return RequestResponse containing a list of UserRequestResponses
      */
     @PostMapping("/create")
-    public ResponseEntity<RequestResponse> insertComment(@AuthenticationPrincipal UserDetails userDetails,
-                                                         @RequestBody CommentRequest postedComment) {
-        RequestResponse messageResponse = commentService.insertComment(postedComment, userDetails.getUsername());
+    public ResponseEntity<RequestResponseDto> insertComment(@AuthenticationPrincipal UserDetails userDetails,
+                                                            @RequestBody CommentRequestDto postedComment) {
+        RequestResponseDto messageResponse = commentService.insertComment(postedComment, userDetails.getUsername());
 
         if (messageResponse.getStatus().equals("fail")) {
             return new ResponseEntity<>(messageResponse, HttpStatus.NOT_FOUND);

@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestResponse {
+public class UserResponseDto {
 
     private String email;
 
-    public UserRequestResponse(UserEntity userEntity) {
+    public UserResponseDto(UserEntity userEntity) {
         this.email = userEntity.getEmail();
     }
 }

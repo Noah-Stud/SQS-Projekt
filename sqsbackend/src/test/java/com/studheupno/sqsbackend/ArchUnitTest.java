@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
-public class ArchUnitTests {
+public class ArchUnitTest {
     @Test
     public void annotationNames() {
         JavaClasses importedClasses = new ClassFileImporter().withImportOption(new ImportOption.DoNotIncludeTests()).importPackages("com.studheupno.sqsbackend");
@@ -38,12 +38,6 @@ public class ArchUnitTests {
         rule.check(importedClasses);
 
         rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Entity").should().resideInAPackage("..entity..");
-        rule.check(importedClasses);
-
-        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Request").should().resideInAPackage("..dto");
-        rule.check(importedClasses);
-
-        rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Response").should().resideInAPackage("..dto");
         rule.check(importedClasses);
 
         rule = classes().that().areNotAnnotations().and().haveSimpleNameEndingWith("Dto").should().resideInAPackage("..dto");

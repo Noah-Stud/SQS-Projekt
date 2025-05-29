@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.service;
 
-import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.CommentRequestDto;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +24,20 @@ public class CommentService {
     /**
      * Creates a new Comment as a specific User for a specific Message.
      *
-     * @param inputCommentRequest Contains the Message for which the Comment is to be created and the Comments content
-     * @param inputUserEmail      User for which the Comment is to be created
+     * @param inputCommentRequestDto Contains the Message for which the Comment is to be created and the Comments content
+     * @param inputUserEmail         User for which the Comment is to be created
      * @return RequestResponse
      */
-    public RequestResponse insertComment(CommentRequest inputCommentRequest, String inputUserEmail) {
+    public RequestResponseDto insertComment(CommentRequestDto inputCommentRequestDto, String inputUserEmail) {
         Optional<UserEntity> optionalUserEntity = userRepo.findByEmail(inputUserEmail);
 
         if (optionalUserEntity.isEmpty()) {
-            RequestResponse responseObj = new RequestResponse();
+            RequestResponseDto responseObj = new RequestResponseDto();
             responseObj.setStatus("fail");
             responseObj.setMessage("User with email: " + inputUserEmail + " not found");
             responseObj.setPayload(null);
             return responseObj;
         }
-        return messageService.updateMessageByComment(inputCommentRequest, optionalUserEntity.get());
+        return messageService.updateMessageByComment(inputCommentRequestDto, optionalUserEntity.get());
     }
 }

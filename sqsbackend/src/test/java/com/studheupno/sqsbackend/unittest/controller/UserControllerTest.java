@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.unittest.controller;
 
 import com.studheupno.sqsbackend.controller.UserController;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -36,13 +36,13 @@ class UserControllerTest {
     @Test
     void getAllTest() {
         UserEntity[] userEntities = {user};
-        RequestResponse responseObj = new RequestResponse();
+        RequestResponseDto responseObj = new RequestResponseDto();
         responseObj.setPayload(userEntities);
         responseObj.setStatus("success");
         responseObj.setMessage("success");
         when(userService.findAll()).thenReturn(responseObj);
 
-        ResponseEntity<RequestResponse> responseObject = userController.findAllUsers();
+        ResponseEntity<RequestResponseDto> responseObject = userController.findAllUsers();
 
         assertNotNull(responseObject);
         assertNotNull(Objects.requireNonNull(responseObject.getBody()).getPayload());

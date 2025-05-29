@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class UserController {
      * @return RequestResponse containing a list of UserRequestResponses
      */
     @GetMapping("/getAll")
-    public ResponseEntity<RequestResponse> findAllUsers() {
+    public ResponseEntity<RequestResponseDto> findAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 }

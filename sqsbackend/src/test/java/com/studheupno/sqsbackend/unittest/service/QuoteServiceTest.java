@@ -31,7 +31,7 @@ class QuoteServiceTest {
 
         String quote = quoteService.getQuote();
         assertNotNull(quote);
-        assertEquals("No data found", quote);
+        assertEquals("No quote found", quote);
 
         //Quote returned from API
         QuoteDto quoteDto = new QuoteDto("quote", "author", "h");

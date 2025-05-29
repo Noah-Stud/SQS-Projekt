@@ -1,8 +1,8 @@
 package com.studheupno.sqsbackend.unittest.service;
 
-import com.studheupno.sqsbackend.dto.CommentRequest;
-import com.studheupno.sqsbackend.dto.MessagesRequestResponse;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.CommentRequestDto;
+import com.studheupno.sqsbackend.dto.MessageResponseDto;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.CommentEntity;
 import com.studheupno.sqsbackend.entity.MessageEntity;
 import com.studheupno.sqsbackend.entity.UserEntity;
@@ -56,7 +56,7 @@ class MessageServiceTest {
         //User does not exist
         when(userRepo.findByEmail("nicht@mail.de")).thenReturn(Optional.empty());
 
-        RequestResponse response = messageService.insertMessage("nicht@mail.de", "Message input");
+        RequestResponseDto response = messageService.insertMessage("nicht@mail.de", "Message input");
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -73,7 +73,7 @@ class MessageServiceTest {
         assertNotNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("success", response.getMessage());
-        assertEquals(new MessagesRequestResponse(message), response.getPayload());
+        assertEquals(new MessageResponseDto(message), response.getPayload());
     }
 
     @Test
@@ -81,7 +81,7 @@ class MessageServiceTest {
         //Message does not exist
         when(messageRepo.findById("idNotExist")).thenReturn(Optional.empty());
 
-        RequestResponse response = messageService.getMessageById("idNotExist");
+        RequestResponseDto response = messageService.getMessageById("idNotExist");
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -97,32 +97,32 @@ class MessageServiceTest {
         assertNotNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("success", response.getMessage());
-        assertEquals(new MessagesRequestResponse(message), response.getPayload());
+        assertEquals(new MessageResponseDto(message), response.getPayload());
     }
 
     @Test
     void getAllMessages() {
         when(messageRepo.findAll()).thenReturn(List.of(message));
 
-        RequestResponse response = messageService.getAllMessages();
+        RequestResponseDto response = messageService.getAllMessages();
 
         assertNotNull(response);
         assertNotNull(response.getPayload());
         assertEquals("success", response.getStatus());
         assertEquals("success", response.getMessage());
-        assertEquals(new MessagesRequestResponse(message), ((List<?>) response.getPayload()).getFirst());
+        assertEquals(new MessageResponseDto(message), ((List<?>) response.getPayload()).getFirst());
     }
 
     @Test
     void updateMessageByComment() {
         //Message does not exist
-        CommentRequest commentRequest = new CommentRequest("idNotExist", "New Comment");
+        CommentRequestDto commentRequestDto = new CommentRequestDto("idNotExist", "New Comment");
         UserEntity commentUser = new UserEntity("id2", "von2@mail.de", "1234", "user");
 
         when(messageRepo.findById("idNotExist")).thenReturn(Optional.empty());
 
 
-        RequestResponse response = messageService.updateMessageByComment(commentRequest, commentUser);
+        RequestResponseDto response = messageService.updateMessageByComment(commentRequestDto, commentUser);
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -130,12 +130,12 @@ class MessageServiceTest {
         assertEquals("Message with id: " + "idNotExist" + " not found", response.getMessage());
 
         //Message does exist
-        commentRequest.setMessageId(message.getId());
+        commentRequestDto.setMessageId(message.getId());
 
         when(messageRepo.findById(message.getId())).thenReturn(Optional.of(message));
         when(commentRepo.save(new CommentEntity(null, user, "New Comment", any()))).thenReturn(comment);
 
-        response = messageService.updateMessageByComment(commentRequest, commentUser);
+        response = messageService.updateMessageByComment(commentRequestDto, commentUser);
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -148,7 +148,7 @@ class MessageServiceTest {
         //Message does not exist
         when(messageRepo.findById("idNotExist")).thenReturn(Optional.empty());
 
-        RequestResponse response = messageService.updateMessageByLike(user.getEmail(), "idNotExist");
+        RequestResponseDto response = messageService.updateMessageByLike(user.getEmail(), "idNotExist");
 
         assertNotNull(response);
         assertNull(response.getPayload());
@@ -176,6 +176,6 @@ class MessageServiceTest {
         assertNotNull(response);
         assertEquals("success", response.getStatus());
         assertEquals("update likes to the target post id: " + message.getId(), response.getMessage());
-        assertEquals(new MessagesRequestResponse(message), response.getPayload());
+        assertEquals(new MessageResponseDto(message), response.getPayload());
     }
 }

@@ -2,7 +2,7 @@ package com.studheupno.sqsbackend.controller;
 
 import com.studheupno.sqsbackend.dto.LogInRequestDto;
 import com.studheupno.sqsbackend.dto.RegisterRequestDto;
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.service.JwtService;
@@ -47,18 +47,18 @@ public class AuthController {
      * @return RequestResponse containing an jwt-Token (if successful)
      */
     @PostMapping("/login")
-    public ResponseEntity<RequestResponse> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
+    public ResponseEntity<RequestResponseDto> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
         logger.info(loginRequestDto.getEmail());
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginRequestDto.getEmail(), loginRequestDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtService.generateJwtToken(authentication);
-            return new ResponseEntity<>(new RequestResponse("success", "authenticated",
+            return new ResponseEntity<>(new RequestResponseDto("success", "authenticated",
                     jwt), HttpStatus.OK);
         } catch (Exception e) {
             logger.info("{} failed", loginRequestDto.getEmail());
-            return new ResponseEntity<>(new RequestResponse("fail", "unauthenticated",
+            return new ResponseEntity<>(new RequestResponseDto("fail", "unauthenticated",
                     null), HttpStatus.UNAUTHORIZED);
         }
     }
@@ -70,11 +70,11 @@ public class AuthController {
      * @return RequestResponse (if successful)
      */
     @PostMapping("/register")
-    public ResponseEntity<RequestResponse> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
+    public ResponseEntity<RequestResponseDto> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
 
         if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
             logger.info("New user not created: Email {} is already in use!", registerRequestDto.getEmail());
-            return new ResponseEntity<>(new RequestResponse("fail", "Error: Email is already in use!",
+            return new ResponseEntity<>(new RequestResponseDto("fail", "Error: Email is already in use!",
                     null), HttpStatus.BAD_REQUEST);
         }
 
@@ -82,7 +82,7 @@ public class AuthController {
                 encoder.encode(registerRequestDto.getPassword()), "");
         userRepository.save(user);
         logger.info("New user created: {}", user.getEmail());
-        return new ResponseEntity<>(new RequestResponse("success", "User registered successfully!",
+        return new ResponseEntity<>(new RequestResponseDto("success", "User registered successfully!",
                 null), HttpStatus.OK);
     }
 }

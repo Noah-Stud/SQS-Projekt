@@ -1,6 +1,6 @@
 package com.studheupno.sqsbackend.controller;
 
-import com.studheupno.sqsbackend.dto.RequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +28,10 @@ public class MessageController {
      * @return RequestResponse
      */
     @PostMapping("/insert")
-    public ResponseEntity<RequestResponse> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
-                                                         @RequestBody String messageContent) {
+    public ResponseEntity<RequestResponseDto> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
+                                                            @RequestBody String messageContent) {
         messageContent = messageContent.substring(0, messageContent.length() - 1);
-        RequestResponse messageResponse = messageService.insertMessage(userDetails.getUsername(), messageContent);
+        RequestResponseDto messageResponse = messageService.insertMessage(userDetails.getUsername(), messageContent);
 
         if (messageResponse.getStatus().equals("fail")) {
             return new ResponseEntity<>(messageResponse, HttpStatus.NOT_FOUND);
@@ -46,8 +46,8 @@ public class MessageController {
      * @return RequestResponse containing the MessageRequestResponse (if successful)
      */
     @GetMapping("/getById")
-    public ResponseEntity<RequestResponse> getMessageById(@RequestBody String messageId) {
-        RequestResponse messageResponse = messageService.getMessageById(messageId);
+    public ResponseEntity<RequestResponseDto> getMessageById(@RequestBody String messageId) {
+        RequestResponseDto messageResponse = messageService.getMessageById(messageId);
 
         if (messageResponse.getStatus().equals("fail")) {
             return new ResponseEntity<>(messageResponse, HttpStatus.NOT_FOUND);
@@ -61,7 +61,7 @@ public class MessageController {
      * @return RequestResponse containing a list of MessageRequestResponses
      */
     @GetMapping("/getAll")
-    public ResponseEntity<RequestResponse> getAllMessages() {
+    public ResponseEntity<RequestResponseDto> getAllMessages() {
         return new ResponseEntity<>(messageService.getAllMessages(), HttpStatus.OK);
     }
 
@@ -73,10 +73,10 @@ public class MessageController {
      * @return RequestResponse
      */
     @PostMapping("/like")
-    public ResponseEntity<RequestResponse> likeMessage(@AuthenticationPrincipal UserDetails userDetails,
-                                                       @RequestBody String messageId) {
+    public ResponseEntity<RequestResponseDto> likeMessage(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestBody String messageId) {
         messageId = messageId.substring(0, messageId.length() - 1);        //Remove last char, because reason
-        RequestResponse messageResponse = messageService.updateMessageByLike(userDetails.getUsername(), messageId);
+        RequestResponseDto messageResponse = messageService.updateMessageByLike(userDetails.getUsername(), messageId);
 
         if (messageResponse.getStatus().equals("fail")) {
             return new ResponseEntity<>(messageResponse, HttpStatus.NOT_FOUND);

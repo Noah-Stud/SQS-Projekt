@@ -1,7 +1,7 @@
 package com.studheupno.sqsbackend.service;
 
-import com.studheupno.sqsbackend.dto.RequestResponse;
-import com.studheupno.sqsbackend.dto.UserRequestResponse;
+import com.studheupno.sqsbackend.dto.RequestResponseDto;
+import com.studheupno.sqsbackend.dto.UserResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class UserService implements UserDetailsService {
      *
      * @return UserRequestResponse of all Users
      */
-    public RequestResponse findAll() {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto findAll() {
+        RequestResponseDto responseObj = new RequestResponseDto();
         responseObj.setStatus("success");
         responseObj.setMessage("success");
-        responseObj.setPayload(userRepo.findAll().stream().map(UserRequestResponse::new).toList());
+        responseObj.setPayload(userRepo.findAll().stream().map(UserResponseDto::new).toList());
         return responseObj;
     }
 
@@ -42,8 +42,8 @@ public class UserService implements UserDetailsService {
      * @param email Email-Address of the User.
      * @return RequestResponse
      */
-    public RequestResponse findByEmail(String email) {
-        RequestResponse responseObj = new RequestResponse();
+    public RequestResponseDto findByEmail(String email) {
+        RequestResponseDto responseObj = new RequestResponseDto();
         Optional<UserEntity> optUser = userRepo.findByEmail(email);
 
         if (optUser.isEmpty()) {
@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
         } else {
             responseObj.setStatus("success");
             responseObj.setMessage("success");
-            responseObj.setPayload(new UserRequestResponse(optUser.get()));
+            responseObj.setPayload(new UserResponseDto(optUser.get()));
 
         }
         return responseObj;
