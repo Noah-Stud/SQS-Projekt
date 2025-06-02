@@ -30,7 +30,9 @@ public class MessageResponseDto {
         this.id = messageEntity.getId();
         this.userEmail = messageEntity.getUser().getEmail();
         this.content = messageEntity.getContent();
-        this.comments = messageEntity.getComments().stream().map(CommentResponseDto::new).toList();
+        this.comments = messageEntity.getComments().stream().map(CommentResponseDto::new)
+                .sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
+                .toList();
         this.createdAt = messageEntity.getCreatedAt();
         this.quote = messageEntity.getQuote();
         this.likes = messageEntity.getLikes().stream().map(UserEntity::getEmail).collect(Collectors.toList());

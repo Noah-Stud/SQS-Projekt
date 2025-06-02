@@ -20,10 +20,14 @@ public class QuoteService {
      * @return String (Quote and Author)
      */
     public String getQuote() {
-        QuoteDto[] quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class);
-        if (quote == null) {
+        try {
+            QuoteDto[] quote = restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class);
+            if (quote == null || quote[0].getA().equals("zenquotes.io")) {
+                return "No quote found";
+            } else
+                return quote[0].getQ() + " (" + quote[0].getA() + ")";
+        } catch (Exception e) {
             return "No quote found";
-        } else
-            return quote[0].getQ() + " \n " + quote[0].getA();
+        }
     }
 }

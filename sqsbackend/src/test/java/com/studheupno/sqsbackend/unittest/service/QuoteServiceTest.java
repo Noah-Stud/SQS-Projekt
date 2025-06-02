@@ -33,14 +33,24 @@ class QuoteServiceTest {
         assertNotNull(quote);
         assertEquals("No quote found", quote);
 
-        //Quote returned from API
-        QuoteDto quoteDto = new QuoteDto("quote", "author", "h");
+        //xyz
+        QuoteDto quoteDto = new QuoteDto("error message", "zenquotes.io", "h");
 
         when(restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class))
                 .thenReturn(new QuoteDto[]{quoteDto});
 
         quote = quoteService.getQuote();
         assertNotNull(quote);
-        assertEquals("quote \n author", quote);
+        assertEquals("No quote found", quote);
+
+        //Quote returned from API
+        quoteDto = new QuoteDto("quote", "author", "h");
+
+        when(restClient.get().uri("https://zenquotes.io/api/random").retrieve().body(QuoteDto[].class))
+                .thenReturn(new QuoteDto[]{quoteDto});
+
+        quote = quoteService.getQuote();
+        assertNotNull(quote);
+        assertEquals("quote (author)", quote);
     }
 }

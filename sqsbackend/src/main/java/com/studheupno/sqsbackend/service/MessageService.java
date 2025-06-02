@@ -102,7 +102,9 @@ public class MessageService {
 
         responseObj.setStatus("success");
         responseObj.setMessage("success");
-        responseObj.setPayload(messages.stream().map(MessageResponseDto::new).toList());
+        responseObj.setPayload(messages.stream().map(MessageResponseDto::new)
+                .sorted((m1, m2) -> m2.getCreatedAt().compareTo(m1.getCreatedAt()))
+                .toList());
         return responseObj;
     }
 
