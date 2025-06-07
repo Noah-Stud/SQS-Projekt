@@ -65,7 +65,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
 
         setCommentContent(e.target.value);
 
-        if (currentUserEmail && null && commentContent.length - 1 > 0 && commentContent.length - 1 <= 100) {
+        if (currentUserEmail != null && commentContent.length - 1 > 0 && commentContent.length - 1 <= 100) {
             setSendButtonDisable(false);
         } else {
             setSendButtonDisable(true);

@@ -92,7 +92,7 @@ export const messageSlice = createSlice({
                 for (let i = 0; i < state.messages.length; i++) {
                     if (state.messages[i].id === action.payload.messageId) {
                         state.messages[i].comments.push(action.payload.comment);
-                        insertComment(action.payload.messageId, action.payload.comment);
+                        void insertComment(action.payload.messageId, action.payload.comment);
                     }
                 }
             }
