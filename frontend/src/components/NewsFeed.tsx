@@ -40,7 +40,7 @@ function NewsFeedContent() {
         <Container fluid className={styles.container}>
         <div>
             <h1>NewsFeed</h1> 
-            <Link to="/">Homepage</Link>
+            <Link to="/">Go to Homepage</Link>
             <MessageCompose />
             {storeMessages.length > 0 ? (
                 storeMessages.map((message: Message) => {

@@ -34,26 +34,25 @@ const LogIn: React.FC = () => {
             });
 
             if (response.data !== null && response.data.status === "fail") {
-                showWarningToast();
+                showWarningToast("Invalid email or password");
                 console.log("unseccesfull login");
             }
 
             if (response.data !== null && response.data.status === "success") {
                 setResData(response.data);
-
-                //localStorage.setItem("psnUserEmail", response.data.payload.user.email);
                 localStorage.setItem("psnToken", response.data.payload);
                 localStorage.setItem("psnUserEmail", inputData.email);
                 console.log("succesfull login");
                 navigate("/newsfeed");
             }
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
+            showWarningToast(err.message)
         }
     };
 
-    const showWarningToast = () => {
-        toast.warn("Invalid email or password", {
+    const showWarningToast = (inputMessage: string) => {
+        toast.warn(inputMessage, {
             position: "bottom-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -126,12 +125,12 @@ const LogIn: React.FC = () => {
                             </Form.Group>
                         </Row>
                         <Button type="submit" variant="success">
-                            Sign In
+                            Log In
                         </Button>
+                        <Link to="/">Go to HomePage</Link>
                     </Form>
                 )}
             </Formik>
-            <Link to="/">Go to LogInPage</Link>
         </Container>
     );
 };

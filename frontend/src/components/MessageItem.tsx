@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-//import { Hashicon } from "@emeraldpay/hashicon-react";
-
 import { Button, Form, Row } from "react-bootstrap";
 import {
     RiHeartFill,
@@ -24,7 +22,7 @@ interface MessageItemProp {
     content: string;
     comments: CommentItem[];
     likes: string[];
-    createdAt: unknown;
+    createdAt: any;
     quote: string;
 }
 
@@ -67,7 +65,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
 
         setCommentContent(e.target.value);
 
-        if (commentContent.length - 1 > 0 && commentContent.length - 1 <= 100) {
+        if (currentUserEmail && null && commentContent.length - 1 > 0 && commentContent.length - 1 <= 100) {
             setSendButtonDisable(false);
         } else {
             setSendButtonDisable(true);
@@ -87,24 +85,20 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
     }
 
     return (
-        <div className="border shadow rounded-3 border-primary p-3 mt-3">
+        <div className={`${styles.message}`}>
             <Row>
-                <div className="d-flex align-items-center mb-3">
-                    {/*<div className="mx-3">*/}
-                    {/*    <Hashicon value={props.userId} size={50} />*/}
-                    {/*</div>*/}
-                    <div className="d-flex flex-column">
-                        <div className="fw-bold">{props.userEmail}</div>
-                    </div>
+                <div className={"d-flex align-items-center mb-3"}>
+                    <div className={`${styles.email}`}>{props.userEmail}</div>
                 </div>
-                <div className="mx-3">
-                    <div>
-                        <p>{props.content}</p>
-                    </div>
+                <div className={`${styles.content}`}>
+                    <p>{props.content}</p>
+                    <p className={`${styles.quote }`}>{props.quote}</p>
+                </div>
+                <div>
+                    <p>{props.createdAt}</p>
                 </div>
 
                 {/* Sub-functions of a message */}
-
                 <div className="d-flex justify-content-center align-items-center">
                     {/* Sub-function like button */}
                     <div className="mx-3">
@@ -163,19 +157,9 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                                 </Button>
                             </div>
                         </div>
-                        {props.comments.map((commentItem: { id: string; userEmail: string, content: string; createdAt: string}) => (
-                            <div className="border rounded border-info my-3 px-2 pb-2">
-                                <div className="d-flex align-items-center my-2">
-                                    <div className="me-auto mx-1">
-{/*                                        <Hashicon value={commentItem.userId} size={30} />{" "}*/}
-                                    </div>
-                                    <div className="w-100 mx-1 fw-bold">
-                                        <span>{commentItem.createdAt.substring(0, 16)}</span>
-                                    </div>
-                                    <div className="w-100 mx-1 fw-bold">
-                                        <span>{commentItem.userEmail}</span>
-                                    </div>
-                                </div>
+                        {props.comments.map((commentItem: { id: string; userEmail: string, content: string; createdAt: string }) => (
+                            <div className={`${styles.content}`}>
+                                <div className={`${styles.email}`}>{props.userEmail}</div>
                                 <div>{commentItem.content}</div>
                             </div>
                         ))}

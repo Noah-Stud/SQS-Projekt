@@ -12,7 +12,7 @@ import styles from "./styles/Register.module.css";
 import Container from "react-bootstrap/esm/Container";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface SignUpData {
     email: string;
@@ -30,25 +30,34 @@ function SignUp() {
     });
 
     async function postSignUpInfo(inputData: SignUpData) {
-        const response = await axios({
-            method: "post",
-            url: "/api/auth/v1/register",
-            data: {
-                email: inputData.email,
-                password: inputData.password,
-            },
-        });
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/api/auth/v1/register",
+                data: {
+                    email: inputData.email,
+                    password: inputData.password,
+                },
+            });
 
-        if (response.data !== null) {
-            setResData(response.data);
-        }
+            if (response.data !== null) {
+                setResData(response.data);
+            }
 
-        if (response.data !== null && response.data.status === "fail") {
-            showWarningToast(response.data.message);
-        }
+            if (response.data == null) {
+                showWarningToast("no return message");
+            }
 
-        if (response.data !== null && response.data.status === "success") {
-            navigate("/login");
+            if (response.data !== null && response.data.status === "fail") {
+                showWarningToast(response.data.message);
+            }
+
+            if (response.data !== null && response.data.status === "success") {
+                navigate("/login");
+            }
+        } catch (error: any) {
+            console.log(error);
+            showWarningToast(error.message);
         }
     }
 
@@ -64,7 +73,6 @@ function SignUp() {
             theme: "colored",
         });
     }
-
 
     return (
         <Container fluid className={styles.container}>
@@ -127,8 +135,9 @@ function SignUp() {
                             </Form.Group>
                         </Row>
                         <Button type="submit" variant="success">
-                            Sign Up
+                            Register
                         </Button>
+                        <Link to="/">Go to HomePage</Link>
                     </Form>
                 )}
             </Formik>

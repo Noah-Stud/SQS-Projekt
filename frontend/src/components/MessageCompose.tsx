@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
-//import { Hashicon } from "@emeraldpay/hashicon-react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +10,7 @@ import { getMessages } from "../feature/messageSlice";
 function MessageCompose() {
     const dispatch = useAppDispatch();
 
-    const [userEmail] = useState<string>(localStorage.getItem("psnUserEmail") + "");
+    const [userEmail] = useState<string>(localStorage.getItem("psnUserEmail") || "You are not logged in" );
     const [messageContent, setMessageContent] = useState<string>("");
     const [messageContentCount, setMessageContentCount] = useState<number>(0);
     const [disableMessageButton, setDisableMessageButton] = useState<boolean>(true);
@@ -45,7 +44,7 @@ function MessageCompose() {
     function handleContentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setMessageContent(e.target.value);
         setMessageContentCount(e.target.value.length);
-        if (messageContentCount === 0 || messageContentCount > 200) {
+        if (localStorage.getItem("psnUserEmail") == null || messageContentCount === 0 || messageContentCount > 200) {
             setDisableMessageButton(true);
         } else {
             setDisableMessageButton(false);
@@ -92,9 +91,6 @@ function MessageCompose() {
                     <Form.Group className="mb-3">
                         <Form.Label>
                             <div className="d-flex align-items-center mb-1">
-                                <div className="mx-3">
-{/*                                    <Hashicon value={userEmail} size={60} />*/}
-                                </div>
                                 <div className="fs-4 fw-bold">{userEmail}</div>
                             </div>
                         </Form.Label>
