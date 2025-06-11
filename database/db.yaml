@@ -5,7 +5,7 @@ services:
       - MYSQL_DATABASE=messages
       - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
     ports:
-      - '3306:3306'
+      - 3306:3306
     volumes:
       - type: bind
         source: volumes/db

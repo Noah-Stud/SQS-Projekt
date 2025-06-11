@@ -1,0 +1,10 @@
+services:
+  backend:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/messages
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql-db
