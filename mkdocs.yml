@@ -1,0 +1,13 @@
+site_name: SQS-Messanger - Dokumentation
+nav:
+  - Start: pages/index.md
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+markdown_extensions:
+  - toc
+  - tables
+  - admonition
