@@ -1,13 +1,13 @@
 site_name: SQS-Messanger - Dokumentation
 docs_dir: pages
 nav:
-  - Start: pages/index.md
-  - Introduction: pages/introduction.md
-  - Installation: pages/installation.md
-  - Arc42: pages/ac42/arc42.md
-  - API: pages/api.md
-  - External API: pages/external_api.md
-  - License: pages/license.md
+  - Start: index.md
+  - Introduction: introduction.md
+  - Installation: installation.md
+  - Arc42: ac42/arc42.md
+  - API: api.md
+  - External API: external_api.md
+  - License: license.md
 theme:
   name: material
   palette:
