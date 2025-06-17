@@ -14,7 +14,7 @@ theme:
     admonition:
       alert: material/alert-circle 
 markdown_extensions:
-- toc
+  - toc
   - tables
   - admonition
   - pymdownx.details
