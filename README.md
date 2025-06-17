@@ -1,21 +1,17 @@
-SQS-Messagnger-App
-========
+# SQS-Messagnger-App
 
 A lightweight chat app, similar to services like Twitter or Mastodon that can be run completely in docker.
 
-See the [read the docs page][docs] for documentation.
+See the [read the docs page][readthedocs] for documentation.
 
-How to launche
--------
+## How to launche
 ```
 cd PATH_TO_PROJECT
 docker compose up
 ```
 
-License
--------
-
+## License
 ```
 ```
 
-[docs]: placeholder
+[readthedocs]: https://google.com
