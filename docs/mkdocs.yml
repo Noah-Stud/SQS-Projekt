@@ -1,6 +1,6 @@
 site_name: Pokémon TCG Pack Simulator - Dokumentation
 nav:
-  - Start: index.md
+  - Start: pages/index.md
 theme:
   name: material
   palette:
