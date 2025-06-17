@@ -1,0 +1,18 @@
+site_name: Pokémon TCG Pack Simulator - Dokumentation
+nav:
+  - Start: pages/index.md
+  - Einführung: pages/introduction.md
+  - Installation: pages/installation.md
+  - API-Dokumentation: pages/api.md
+  - Lizenz: pages/license.md
+  - Externe API: pages/open_source.md
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+markdown_extensions:
+  - toc
+  - tables
+  - admonition
