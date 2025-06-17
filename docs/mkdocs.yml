@@ -1,4 +1,4 @@
-site_name: Pokémon TCG Pack Simulator - Dokumentation
+site_name: SQS-Messanger - Dokumentation
 nav:
   - Start: pages/index.md
 theme:
