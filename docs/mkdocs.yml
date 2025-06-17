@@ -1,12 +1,18 @@
 site_name: SQS-Messanger - Dokumentation
+docs_dir: pages
 nav:
-  - Start: pages/index.md
+  - Start: index.md
 theme:
   name: material
   palette:
     - scheme: default
       primary: indigo
       accent: indigo
+  features:
+    - navigation.tabs
+  icon:
+    admonition:
+      alert: material/alert-circle 
 markdown_extensions:
   - toc
   - tables
