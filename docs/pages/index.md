@@ -4,7 +4,7 @@ Welcome to the documentation for the "SQS Messenger App." This documentation con
 
 - [Introduction](introduction.md)
 - [Installation](installation.md)
-- [Arc42](arc42/arc42.md)
+- [Arc42](arc42.md)
 - [API](api.md)
 - [External API](external_api.md)
 - [License](license.md)
