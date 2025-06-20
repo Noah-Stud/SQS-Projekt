@@ -12,6 +12,9 @@ const App: React.FC = () => {
                 <Link to="/register">Go to RegisterPage</Link>
                 <Link to="/newsfeed">Go to NewsFeedPage</Link>
             </header>
+            <div className="Disclaimer">
+                Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
+            </div>
         </div>
     );
 }

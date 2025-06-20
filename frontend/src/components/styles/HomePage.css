@@ -13,6 +13,12 @@
   color: white;
 }
 
+.Disclaimer {
+  align-items: center;
+  bottom: 5px; 
+  background-color: green
+}
+
 .App-link {
   color: #61dafb;
 }
