@@ -53,6 +53,7 @@ function SignUp() {
             }
 
             if (response.data !== null && response.data.status === "success") {
+                console.log("succesfull registration");
                 navigate("/login");
             }
         } catch (error: any) {
@@ -101,11 +102,11 @@ function SignUp() {
                         className={styles.formContainer}
                     >
                         <Row className="mb-5 text-center">
-                            <h1 className="text-success">Sign Up</h1>
+                            <h1 className="text-success">Register </h1>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInEmail">
-                                <Form.Label>Email</Form.Label>
+                                <Form.Label>Email </Form.Label>
                                 <Form.Control
                                     type="email"
                                     name="email"
@@ -120,7 +121,7 @@ function SignUp() {
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInPassword">
-                                <Form.Label>Password</Form.Label>
+                                <Form.Label>Password </Form.Label>
                                 <Form.Control
                                     type="password"
                                     name="password"

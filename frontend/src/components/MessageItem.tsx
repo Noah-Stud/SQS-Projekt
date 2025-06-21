@@ -81,6 +81,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                 })
             );
             setCommentContent("");
+            window.location.reload();
         }
     }
 
@@ -159,7 +160,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                         </div>
                         {props.comments.map((commentItem: { id: string; userEmail: string, content: string; createdAt: string }) => (
                             <div className={`${styles.content}`}>
-                                <div className={`${styles.email}`}>{props.userEmail}</div>
+                                <div className={`${styles.email}`}>{commentItem.userEmail}</div>
                                 <div>{commentItem.content}</div>
                             </div>
                         ))}

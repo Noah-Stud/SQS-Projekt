@@ -92,11 +92,11 @@ const LogIn: React.FC = () => {
                         className={styles.formContainer}
                     >
                         <Row className="mb-5 text-center">
-                            <h1 className="text-success">Sign In</h1>
+                            <h1 className="text-success">Log In</h1>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInEmail">
-                                <Form.Label>Email</Form.Label>
+                                <Form.Label>Email </Form.Label>
                                 <Form.Control
                                     type="email"
                                     name="email"
@@ -111,7 +111,7 @@ const LogIn: React.FC = () => {
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInPassword">
-                                <Form.Label>Password</Form.Label>
+                                <Form.Label>Password </Form.Label>
                                 <Form.Control
                                     type="password"
                                     name="password"

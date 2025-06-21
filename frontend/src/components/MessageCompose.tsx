@@ -67,6 +67,7 @@ function MessageCompose() {
                 setMessageContent("");
                 setMessageContentCount(0);
                 setDisableMessageButton(true);
+                window.location.reload();
             }
 
             if (response.data !== null && response.data.status === "fail") {

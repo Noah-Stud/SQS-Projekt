@@ -61,9 +61,7 @@ async function updateLike(messageId: string) {
             Authorization: "Bearer " + localStorage.getItem("psnToken"),
         },
         data: messageId,
-
     });
-
     return response.data;
 }
 
