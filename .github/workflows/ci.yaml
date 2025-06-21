@@ -29,34 +29,9 @@ jobs:
           name: build-artifact
           path: sqsbackend/build/libs
 
-  run-unit-tests:
-    name: Run unit tests
+  run-unit-tests-and-create-jacoco-report:
+    name: Run unit tests and create jacoco report
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-
-      - name: Permissions
-        run: chmod +x sqsbackend/gradlew
-
-      - name: Run unit tests
-        run: ./sqsbackend/gradlew test -p sqsbackend/
-
-  create-jacoco-report:
-    name: Create jacoco report
-    needs: run-unit-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -117,16 +92,7 @@ jobs:
           name: build-artifact
 
       - name: Startup database docker container
-        run: docker compose -f "./database/db.yaml" up -d --build --wait --wait-timeout 30
-
-      - name: Startup backend docker container
-        run: docker compose -f "./sqsbackend/backend_docker.yaml" up -d --build --wait --wait-timeout 30
-
-      - name: Install and build frontend dependencies
-        working-directory: ./frontend
-        run: |
-          npm install
-          npm run build
+        run: docker compose -f "./compose.yaml" up -d --build --wait --wait-timeout 30
 
       - name: Wait for frontend to become available
         working-directory: ./playwright
