@@ -8,8 +8,8 @@ services:
       - 3306:3306
     volumes:
       - type: bind
-        source: ../volumes/db
+        source: ../volumes/database/db
         target: /var/lib/mysql
       - type: bind
-        source: ../volumes/init.sql
+        source: ../volumes/database/init.sql
         target: /docker-entrypoint-initdb.d/init.sql
