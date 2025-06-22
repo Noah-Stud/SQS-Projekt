@@ -16,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -46,6 +43,7 @@ public class AuthController {
      * @param loginRequestDto Request containing an email and a password
      * @return RequestResponse containing an jwt-Token (if successful)
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<RequestResponseDto> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
         logger.info(loginRequestDto.getEmail());
@@ -69,6 +67,7 @@ public class AuthController {
      * @param registerRequestDto Request containing an email and a password
      * @return RequestResponse (if successful)
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<RequestResponseDto> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
 
