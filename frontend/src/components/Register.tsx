@@ -102,7 +102,7 @@ function SignUp() {
                         className={styles.formContainer}
                     >
                         <Row className="mb-5 text-center">
-                            <h1 className="text-success">Register </h1>
+                            <h1 className="text-success">Register</h1>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInEmail">
