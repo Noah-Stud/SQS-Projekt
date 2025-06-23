@@ -6,6 +6,7 @@ import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.UserEntity;
 import com.studheupno.sqsbackend.repo.UserRepo;
 import com.studheupno.sqsbackend.service.JwtService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,8 @@ public class AuthController {
      */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
-    public ResponseEntity<RequestResponseDto> authenticateUser(@RequestBody LogInRequestDto loginRequestDto) {
-        logger.info(loginRequestDto.getEmail());
+    public ResponseEntity<RequestResponseDto> authenticateUser(@Valid @RequestBody LogInRequestDto loginRequestDto) {
+        logger.info("Login-Request from: {}", loginRequestDto.getEmail());
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginRequestDto.getEmail(), loginRequestDto.getPassword()));
@@ -69,8 +70,8 @@ public class AuthController {
      */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
-    public ResponseEntity<RequestResponseDto> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
-
+    public ResponseEntity<RequestResponseDto> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+        logger.info("Register-Request from: {}", registerRequestDto.getEmail());
         if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
             logger.info("New user not created: Email {} is already in use!", registerRequestDto.getEmail());
             return new ResponseEntity<>(new RequestResponseDto("fail", "Error: Email is already in use!",
