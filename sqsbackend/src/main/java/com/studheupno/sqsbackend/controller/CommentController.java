@@ -3,6 +3,7 @@ package com.studheupno.sqsbackend.controller;
 import com.studheupno.sqsbackend.dto.CommentRequestDto;
 import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class CommentController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/create")
     public ResponseEntity<RequestResponseDto> insertComment(@AuthenticationPrincipal UserDetails userDetails,
-                                                            @RequestBody CommentRequestDto postedComment) {
+                                                            @Valid @RequestBody CommentRequestDto postedComment) {
         RequestResponseDto messageResponse = commentService.insertComment(postedComment, userDetails.getUsername());
 
         if (messageResponse.getStatus().equals("fail")) {

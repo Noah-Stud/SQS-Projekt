@@ -2,6 +2,7 @@ package com.studheupno.sqsbackend.controller;
 
 import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.MessageService;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class MessageController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/insert")
     public ResponseEntity<RequestResponseDto> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
-                                                            @RequestBody String messageContent) {
+                                                            @NotBlank @RequestBody String messageContent) {
         messageContent = messageContent.substring(0, messageContent.length() - 1);
         RequestResponseDto messageResponse = messageService.insertMessage(userDetails.getUsername(), messageContent);
 
@@ -48,7 +49,7 @@ public class MessageController {
      */
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getById")
-    public ResponseEntity<RequestResponseDto> getMessageById(@RequestBody String messageId) {
+    public ResponseEntity<RequestResponseDto> getMessageById(@NotBlank @RequestBody String messageId) {
         RequestResponseDto messageResponse = messageService.getMessageById(messageId);
 
         if (messageResponse.getStatus().equals("fail")) {
@@ -78,7 +79,7 @@ public class MessageController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/like")
     public ResponseEntity<RequestResponseDto> likeMessage(@AuthenticationPrincipal UserDetails userDetails,
-                                                          @RequestBody String messageId) {
+                                                          @NotBlank @RequestBody String messageId) {
         messageId = messageId.substring(0, messageId.length() - 1);        //Remove last char, because reason
         RequestResponseDto messageResponse = messageService.updateMessageByLike(userDetails.getUsername(), messageId);
 
