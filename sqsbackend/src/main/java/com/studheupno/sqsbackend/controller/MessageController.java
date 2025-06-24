@@ -28,7 +28,6 @@ public class MessageController {
      * @param messageContent String containing the messageContent
      * @return RequestResponse
      */
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/insert")
     public ResponseEntity<RequestResponseDto> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
                                                             @NotBlank @RequestBody String messageContent) {
@@ -47,7 +46,6 @@ public class MessageController {
      * @param messageId ID of the message
      * @return RequestResponse containing the MessageRequestResponse (if successful)
      */
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getById")
     public ResponseEntity<RequestResponseDto> getMessageById(@NotBlank @RequestBody String messageId) {
         RequestResponseDto messageResponse = messageService.getMessageById(messageId);
@@ -63,7 +61,6 @@ public class MessageController {
      *
      * @return RequestResponse containing a list of MessageRequestResponses
      */
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getAll")
     public ResponseEntity<RequestResponseDto> getAllMessages() {
         return new ResponseEntity<>(messageService.getAllMessages(), HttpStatus.OK);
@@ -76,7 +73,6 @@ public class MessageController {
      * @param messageId   ID of the message
      * @return RequestResponse
      */
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/like")
     public ResponseEntity<RequestResponseDto> likeMessage(@AuthenticationPrincipal UserDetails userDetails,
                                                           @NotBlank @RequestBody String messageId) {
