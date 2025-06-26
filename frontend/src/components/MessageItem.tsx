@@ -102,8 +102,9 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                 {/* Sub-functions of a message */}
                 <div className="d-flex justify-content-center align-items-center">
                     {/* Sub-function like button */}
-                    <div className="mx-3">
+                    <div>
                         <span
+                            id="buttonToggleLike"
                             className={`${styles.likeButton} mx-1 fs-4`}
                             onClick={handleLikeClick}
                         >
@@ -113,22 +114,20 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                                 <RiHeartLine className="text-danger" />
                             )}
                         </span>
-                        <span>
-                            {props.likes.length > 0 ? props.likes.length : null}
+                        <span id="amountOfLikes">
+                            {props.likes.length >= 0 ? props.likes.length : null}
                         </span>
                     </div>
 
                     {/* Sub-function comment button */}
                     <div className="mx-3">
                         <span
+                            id="buttonToggleComment"
                             className={`${styles.commentButton} mx-1 fs-4`}
                             onClick={handleCommentButtonClick}
                         >
                             <RiMessage2Fill className="text-primary" />
                         </span>
-                        {/*<span>*/}
-                        {/*    {props.comments.length > 0 ? props.comments.length : null}*/}
-                        {/*</span>*/}
                     </div>
                 </div>
 
@@ -139,6 +138,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                             <Form className="w-100 mx-1">
                                 <Form.Group>
                                     <Form.Control
+                                        id="inputComment"
                                         type="text"
                                         placeholder="Write a comment..."
                                         value={commentContent}
@@ -149,6 +149,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                             <span className="mx-1">{commentContent.length}/100</span>
                             <div className="ms-auto">
                                 <Button
+                                    id="buttonSendComment"
                                     variant="success"
                                     className="p-1"
                                     disabled={sendButtonDisable}

@@ -96,6 +96,7 @@ function MessageCompose() {
                             </div>
                         </Form.Label>
                         <Form.Control
+                            id="inputMessage"
                             as="textarea"
                             rows={4}
                             placeholder="..."
@@ -107,6 +108,7 @@ function MessageCompose() {
                     <div className="d-flex justify-content-end align-items-center">
                         <span>Characters: {messageContentCount}/200</span>
                         <Button
+                            id="buttonPost"
                             onClick={handleCreateMessage}
                             variant="success"
                             disabled={disableMessageButton}

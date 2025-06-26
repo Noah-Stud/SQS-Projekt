@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('should show page title', async ({ page }) => {
+test('should be homepage', async ({ page }) => {
     await page.goto('/');
 
     // Check if the page title is correct

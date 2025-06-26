@@ -91,8 +91,8 @@ const LogIn: React.FC = () => {
                         onSubmit={handleSubmit}
                         className={styles.formContainer}
                     >
-                        <Row className="mb-5 text-center">
-                            <h1 className="text-success">Log In</h1>
+                        <Row>
+                            <h1 id="inputLogin" className="text-success">Log In</h1>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="signInEmail">
