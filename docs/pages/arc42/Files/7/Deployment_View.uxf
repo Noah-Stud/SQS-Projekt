@@ -1,21 +1,22 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>240</x><y>340</y><w>190</w><h>130</h></coordinates><panel_attributes>SQS-Messanger-User-Computer
-bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>570</x><y>340</y><w>410</w><h>210</h></coordinates><panel_attributes>SQS-Messanger-Backend-Server
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>240</x><y>340</y><w>190</w><h>130</h></coordinates><panel_attributes>SQS-Chat-App-User-Computer
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>570</x><y>340</y><w>410</w><h>210</h></coordinates><panel_attributes>SQS-Chat-App-Server
 bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>510</y><w>190</w><h>110</h></coordinates><panel_attributes>Quote-API
 bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>270</x><y>380</y><w>120</w><h>60</h></coordinates><panel_attributes>&lt;&lt;external&gt;&gt;
 Browser
 (with Frontend)
-bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>390</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;docker-container&gt;&gt;
+bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>440</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;docker-container&gt;&gt;
 SpringBootApplication 
 bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>490</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;docker-container&gt;&gt;
 MySQLDatabase
 bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>440</y><w>140</w><h>40</h></coordinates><panel_attributes>compose.yaml
-bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>440</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;docker-container&gt;&gt;
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>390</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;docker-container&gt;&gt;
 Frontend
-bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>390</y><w>230</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
-&lt;&lt;get-data-from&gt;&gt;</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>400</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
-&lt;&lt;build&gt;&gt;</panel_attributes><additional_attributes>80;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>440</y><w>100</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
-&lt;&lt;build&gt;&gt;</panel_attributes><additional_attributes>80;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>450</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>400</y><w>230</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;get-data-from&gt;&gt;</panel_attributes><additional_attributes>10;10;210;60</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>440</y><w>100</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;build&gt;&gt;</panel_attributes><additional_attributes>80;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>400</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;build&gt;&gt;</panel_attributes><additional_attributes>80;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>450</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;build&gt;&gt;</panel_attributes><additional_attributes>80;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>550</y><w>150</w><h>40</h></coordinates><panel_attributes>&lt;&lt;external&gt;&gt;
 API-Service
-bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>400</y><w>230</w><h>80</h></coordinates><panel_attributes>lt=.&gt;
-&lt;&lt;build-from&gt;&gt;</panel_attributes><additional_attributes>10;10;210;60</additional_attributes></element></diagram>
+bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>390</y><w>230</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;build-from&gt;&gt;</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>450</y><w>210</w><h>140</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;get-data-from&gt;&gt;</panel_attributes><additional_attributes>190;10;10;120</additional_attributes></element></diagram>

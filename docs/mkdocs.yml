@@ -1,4 +1,4 @@
-site_name: SQS-Messanger - Dokumentation
+site_name: SQS-Chat-App - Documentation
 docs_dir: pages
 nav:
   - Start: index.md

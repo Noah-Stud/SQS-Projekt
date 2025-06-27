@@ -1,6 +1,6 @@
 # API-Dokumentation
 
-The API of the SQS-Messanger-App allows for the registration / log in of Users, creation, pulling and liking of Messages
+The API of the SQS-Chat-App allows for the registration / log in of Users, creation, pulling and liking of Messages
 and the creation of new Comments.
 
 ## 1. Authentication

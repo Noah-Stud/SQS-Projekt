@@ -1,6 +1,6 @@
-# SQS-Messanger-App
+# SQS-Chat-App
 
-Welcome to the documentation for the "SQS Messenger App." This documentation consists of the following parts:
+Welcome to the documentation for the "SQS-Chat-App." This documentation consists of the following parts:
 
 - [Introduction](introduction.md)
 - [Installation](installation.md)
