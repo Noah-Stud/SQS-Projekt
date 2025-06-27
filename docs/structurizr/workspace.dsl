@@ -1,11 +1,10 @@
 workspace {
-
     !identifiers hierarchical
-
+	
     model {
         u = person "User"
         a = person "Admin"
-        ss = softwareSystem "SQS-Messenger-System" {
+        ss = softwareSystem "SQS-Chat-App-System" {
             tags "Owned"
             wa = container "Web-Application"{
                 tags "Frontend"
@@ -45,41 +44,41 @@ workspace {
         ss.wa -> ss.sbs.mc "REST-Requests"
         ss.wa -> ss.sbs.cc "REST-Requests"
 
-        ss.sbs.uc -> ss.sbs.us "Queries"
-        ss.sbs.us -> ss.sbs.ur "Queries"
+        ss.sbs.uc -> ss.sbs.us "Calls"
+        ss.sbs.us -> ss.sbs.ur "Calls"
         ss.sbs.ur -> ss.db "Queries"
 
-        ss.sbs.mc -> ss.sbs.ms
-        ss.sbs.ms -> ss.sbs.mr
-        ss.sbs.ms -> ss.sbs.qs
+        ss.sbs.mc -> ss.sbs.ms "Calls"
+        ss.sbs.ms -> ss.sbs.mr "Calls"
+        ss.sbs.ms -> ss.sbs.qs "Calls"
         ss.sbs.mr -> ss.db "Queries"
 
-        ss.sbs.cc -> ss.sbs.cs
-        ss.sbs.cs -> ss.sbs.cr
-        ss.sbs.cs -> ss.sbs.ms
+        ss.sbs.cc -> ss.sbs.cs "Calls"
+        ss.sbs.cs -> ss.sbs.cr "Calls"
+        ss.sbs.cs -> ss.sbs.ms "Calls"
         ss.sbs.cr -> ss.db "Queries"
 
         ss.sbs.qs -> qa "REST-Requests"
     }
 
     views {
-        systemContext ss "Diagram_1" {
+        systemContext ss "System-Context" {
             include *
             autolayout lr
         }
 
-        container ss "Diagram_2" {
+        container ss "Container" {
             include *
             autolayout lr
         }
 
-        component ss.sbs "Diagram_3" {
+        component ss.sbs "Component-Backend" {
             include *
             exclude ss.sbs.jts ss.sbs.btf ss.sbs.sc
             autoLayout tb
         }
 
-        component ss.sbs "Diagram_4" {
+        component ss.sbs "Component-Backend-Extra" {
             include ss.sbs.jts ss.sbs.btf ss.sbs.sc
             autoLayout tb
         }
@@ -107,5 +106,4 @@ workspace {
             }
         }
     }
-
 }
