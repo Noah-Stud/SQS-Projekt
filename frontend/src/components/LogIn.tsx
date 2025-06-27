@@ -95,7 +95,7 @@ const LogIn: React.FC = () => {
                             <h1 id="inputLogin" className="text-success">Log In</h1>
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col} md="12" controlId="signInEmail">
+                            <Form.Group as={Col} md="12" controlId="logInEmail">
                                 <Form.Label>Email </Form.Label>
                                 <Form.Control
                                     type="email"
@@ -110,7 +110,7 @@ const LogIn: React.FC = () => {
                             </Form.Group>
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col} md="12" controlId="signInPassword">
+                            <Form.Group as={Col} md="12" controlId="logInPassword">
                                 <Form.Label>Password </Form.Label>
                                 <Form.Control
                                     type="password"

@@ -3,17 +3,33 @@ import { test, expect } from '@playwright/test';
 test('should be newsfeed page', async ({ page }) => {
     await page.goto('/#/newsfeed');
 
-    // Check if the page title is correct
     await expect(page.getByText('NewsFeed')).toBeVisible();
     await expect(page.getByText('Go to Homepage')).toBeVisible();
     await expect(page.getByText('NewsFeed')).toBeVisible();
+
+
+    await page.goto('/#/register');
+    await page.locator('#registerEmail').fill('playwright2@mail.de');
+    await page.locator('#registerPassword').fill('12345');
+    await page.locator('button:text("Register")').click();
+
+
+    await page.locator('#logInEmail').fill('playwright2@mail.de');
+    await page.locator('#logInPassword').fill('12345');
+    await page.locator('button:text("Log In")').click();
+
+    await expect(page).toHaveURL('/#/newsfeed');
+    await expect(page.getByText('NewsFeed')).toBeVisible();
+    await expect(page.getByText('Go to Homepage')).toBeVisible();
+    await expect(page.getByText('NewsFeed')).toBeVisible();
+    await expect(page.getByText('playwright2@mail.de')).toBeVisible();
 });
 
 
 test('should create message', async ({ page }) => {
     await page.goto('/#/login');
-    await page.locator('#signInEmail').fill('playwright@mail.de');
-    await page.locator('#signInPassword').fill('12345');
+    await page.locator('#logInEmail').fill('playwright2@mail.de');
+    await page.locator('#logInPassword').fill('12345');
     await page.locator('button:text("Log In")').click();
     await expect(page).toHaveURL('/#/newsfeed');
 
@@ -46,40 +62,40 @@ test('should not create message', async ({ page }) => {
 
 test('should like message', async ({ page }) => {
     await page.goto('/#/login');
-    await page.locator('#signInEmail').fill('playwright@mail.de');
-    await page.locator('#signInPassword').fill('12345');
+    await page.locator('#logInEmail').fill('playwright2@mail.de');
+    await page.locator('#logInPassword').fill('12345');
     await page.locator('button:text("Log In")').click();
     await expect(page).toHaveURL('/#/newsfeed');
 
     var responsePromise = page.waitForResponse(resp => resp.url().includes('/api/message/v1/like') && resp.status() === 200);
-    await page.locator('#buttonToggleLike').first().click()
+    await page.locator('#buttonToggleLike').click()
     await responsePromise;
 
     await expect(page).toHaveURL('/#/newsfeed');
-    await expect(page.locator('#amountOfLikes').first()).toContainText('1', { exact: true });
+    await expect(page.locator('#amountOfLikes')).toContainText('1', { exact: true });
 
 
-    await page.locator('#buttonToggleLike').first().click()
+    await page.locator('#buttonToggleLike').click()
     await responsePromise;
 
     await expect(page).toHaveURL('/#/newsfeed');
-    await expect(page.locator('#amountOfLikes').first()).toContainText('0', { exact: true });
+    await expect(page.locator('#amountOfLikes')).toContainText('0', { exact: true });
 });
 
 test('should not like message', async ({ page }) => {
     await page.goto('/#/newsfeed');
-    page.locator('#buttonToggleLike').first().click()
+    page.locator('#buttonToggleLike').click()
 
     await page.waitForTimeout(1000);
     await expect(page).toHaveURL('/#/newsfeed');
-    await expect(page.locator('#amountOfLikes').first()).toContainText('0', { exact: true });
+    await expect(page.locator('#amountOfLikes')).toContainText('0', { exact: true });
 });
 
 
 test('should create new comment', async ({ page }) => {
     await page.goto('/#/login');
-    await page.locator('#signInEmail').fill('playwright@mail.de');
-    await page.locator('#signInPassword').fill('12345');
+    await page.locator('#logInEmail').fill('playwright2@mail.de');
+    await page.locator('#logInPassword').fill('12345');
     await page.locator('button:text("Log In")').click();
     await expect(page).toHaveURL('/#/newsfeed');
 
@@ -98,7 +114,7 @@ test('should create new comment', async ({ page }) => {
 
 test('should not create comment', async ({ page }) => {
     await page.goto('/#/newsfeed');
-    await page.locator('#buttonToggleComment').first().click()
+    await page.locator('#buttonToggleComment').click()
     await page.locator('#inputComment').pressSequentially('Test Comment for Playwright (no success)');
     await expect(page.locator('#buttonSendComment')).toBeDisabled()
 
