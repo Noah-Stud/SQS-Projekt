@@ -12,16 +12,8 @@ export default defineConfig({
     },
     projects: [
         {
-            name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
-        },
-        {
             name: 'Google Chrome',
             use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-        },
-        {
-            name: 'Microsoft Edge',
-            use: { ...devices['Desktop Edge'], channel: 'msedge' },
         },
     ],
     webServer: undefined, // Anwendung wird manuell gestartet
