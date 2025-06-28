@@ -86,12 +86,12 @@ function MessageCompose() {
 
     return (
         <div>
-            <div className="border rounded-3 border-success p-3 shadow">
+            <div>
                 <ToastContainer />
-                <Form className="d-flex flex-column">
-                    <Form.Group className="mb-3">
+                <Form>
+                    <Form.Group>
                         <Form.Label>
-                            <div className="d-flex align-items-center mb-1">
+                            <div>
                                 <div className="fs-4 fw-bold">{userEmail}</div>
                             </div>
                         </Form.Label>
@@ -105,7 +105,7 @@ function MessageCompose() {
                             style={{ resize: "none", height: "7rem" }}
                         />
                     </Form.Group>
-                    <div className="d-flex justify-content-end align-items-center">
+                    <div>
                         <span>Characters: {messageContentCount}/200</span>
                         <Button
                             id="buttonPost"

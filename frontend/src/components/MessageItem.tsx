@@ -100,7 +100,7 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
                 </div>
 
                 {/* Sub-functions of a message */}
-                <div className="d-flex justify-content-center align-items-center">
+                <div>
                     {/* Sub-function like button */}
                     <div>
                         <span
@@ -133,9 +133,9 @@ const MessageItem: React.FC<MessageItemProp> = (props) => {
 
                 {/* List of comments and comment input box */}
                 {commentStatus ? (
-                    <div className="mt-3">
-                        <div className="d-flex align-items-center">
-                            <Form className="w-100 mx-1">
+                    <div>
+                        <div>
+                            <Form>
                                 <Form.Group>
                                     <Form.Control
                                         id="inputComment"

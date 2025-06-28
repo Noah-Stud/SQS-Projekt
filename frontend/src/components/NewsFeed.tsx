@@ -58,7 +58,7 @@ function NewsFeedContent() {
                     );
                 })
             ) : (
-                <div className="d-flex justify-content-center align-items-center my-5">
+                <div>
                     <Spinner animation="border" variant="success" />
                 </div>
             )}
