@@ -2,6 +2,9 @@ services:
   backend:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/messages
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=mauFJcuf5dhRMQrjj
+      - SERVER.PORT=8080
     build:
       context: .
     ports:

@@ -64,7 +64,8 @@ and the creation of new Comments.
 ### 2.1 Getting all Users
 - **Endpoint:** `GET /api/user/v1/getAll`
 - **Description:** Gets all registered Users.
-- **Parameters:** ---
+- **Headers:**
+  - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Response:**
     - **Status 200**
       ```json
@@ -89,6 +90,8 @@ and the creation of new Comments.
 ### 3.1 Inserting new Message
 - **Endpoint:** `POST /api/message/v1/insert`
 - **Description:** Creates a new Message.
+- **Headers:**
+    - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Parameters:**
     ```
     Test Message'
@@ -114,6 +117,8 @@ and the creation of new Comments.
 ### 3.2 Getting a Message by its ID
 - **Endpoint:** `GET /api/message/v1/getById`
 - **Description:** Gets a specific Message by its ID.
+- **Headers:**
+    - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Parameters:**
     ```
     cd5fb364-5dfc-4fed-9205-252cd80ee42b
@@ -180,6 +185,8 @@ and the creation of new Comments.
 ### 3.4 Liking a Message
 - **Endpoint:** `POST /api/message/v1/like`
 - **Description:** Creates a new Message.
+- **Headers:**
+    - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Parameters:**
     ```
     cd5fb364-5dfc-4fed-9205-252cd80ee42b'
@@ -216,6 +223,8 @@ and the creation of new Comments.
 ### 4.1 Creating a new Comment
 - **Endpoint:** `POST /api/comment/v1/create`
 - **Description:** Creates a new Comment under an existing Message.
+- **Headers:**
+    - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Parameters:**
     ```json
     {
