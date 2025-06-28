@@ -45,9 +45,10 @@ const LogIn: React.FC = () => {
                 console.log("succesfull login");
                 navigate("/newsfeed");
             }
-        } catch (err: any) {
-            console.log(err);
-            showWarningToast(err.message)
+        } catch (err) {
+            var error = err as Error
+            console.log(error);
+            showWarningToast(error.message);
         }
     };
 

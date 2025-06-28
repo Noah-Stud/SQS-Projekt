@@ -10,7 +10,7 @@ import { getMessages } from "../feature/messageSlice";
 function MessageCompose() {
     const dispatch = useAppDispatch();
 
-    const [userEmail] = useState<string>(localStorage.getItem("psnUserEmail") || "You are not logged in" );
+    const [userEmail] = useState<string>(localStorage.getItem("psnUserEmail") ?? "You are not logged in" );
     const [messageContent, setMessageContent] = useState<string>("");
     const [messageContentCount, setMessageContentCount] = useState<number>(0);
     const [disableMessageButton, setDisableMessageButton] = useState<boolean>(true);

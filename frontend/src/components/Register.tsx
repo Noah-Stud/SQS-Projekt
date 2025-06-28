@@ -56,7 +56,8 @@ function SignUp() {
                 console.log("succesfull registration");
                 navigate("/login");
             }
-        } catch (error: any) {
+        } catch (err) {
+            var error = err as Error
             console.log(error);
             showWarningToast(error.message);
         }

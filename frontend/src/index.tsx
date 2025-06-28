@@ -9,7 +9,7 @@ import { store } from "./app/store";
 axios.defaults.baseURL = 'http://localhost:8080';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root')!
+    document.getElementById('root') as HTMLElement
 );
 
 root.render(
