@@ -3,13 +3,5 @@ services:
     build: .
     ports:
       - "3000:3000"
-#    volumes:
-#     - type: bind
-#       source: ../volumes/frontend
-#       target: /app
-#     - type: bind
-#       source: ../volumes/frontend/node_modules
-#       target: /app/node_modules
-#    command: npm start
     depends_on:
       - backend
