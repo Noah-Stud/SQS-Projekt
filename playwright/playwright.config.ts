@@ -10,11 +10,5 @@ export default defineConfig({
         headless: true,
         viewport: { width: 1280, height: 720 },
     },
-    projects: [
-        {
-            name: 'Google Chrome',
-            use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-        },
-    ],
     webServer: undefined, // Anwendung wird manuell gestartet
 });

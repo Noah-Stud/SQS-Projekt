@@ -13,8 +13,8 @@ test('should be register page', async ({ page }) => {
 test('should register', async ({ page }) => {
     await page.goto('/#/register');
 
-    await page.locator('#redEId').fill('playwright@mail.de');
-    await page.locator('#redPId').fill('12345');
+    await page.locator('#registerEmail').fill('playwright@mail.de');
+    await page.locator('#registerPassword').fill('12345');
     await page.locator('button:text("Register")').click();
 
     await expect(page).toHaveURL('/#/login');
@@ -23,8 +23,8 @@ test('should register', async ({ page }) => {
 test('should not register', async ({ page }) => {
     await page.goto('/#/register');
 
-    await page.locator('#redEId').fill('playwright@mail.de');
-    await page.locator('#redPId').fill('12345');
+    await page.locator('#registerEmail').fill('playwright@mail.de');
+    await page.locator('#registerPassword').fill('12345');
     await page.locator('button:text("Register")').click();
 
     await expect(page).toHaveURL('/#/register');
