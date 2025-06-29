@@ -106,9 +106,10 @@ function SignUp() {
                             <h1 className="text-success">Register</h1>
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col} md="12" controlId="registerEmail">
+                            <Form.Group as={Col} md="12">
                                 <Form.Label>Email </Form.Label>
                                 <Form.Control
+                                    id="redEId"
                                     type="email"
                                     name="email"
                                     value={values.email}
@@ -121,9 +122,10 @@ function SignUp() {
                             </Form.Group>
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col} md="12" controlId="registerPassword">
+                            <Form.Group as={Col} md="12">
                                 <Form.Label>Password </Form.Label>
                                 <Form.Control
+                                    id="redPId"
                                     type="password"
                                     name="password"
                                     value={values.password}
