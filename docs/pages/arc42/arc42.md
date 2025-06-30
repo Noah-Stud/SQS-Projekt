@@ -7,7 +7,7 @@
 - [5. Solution Strategy](5.BuildingBlockView.md)
 - [6. Runtime View](6.RuntimeView.md)
 - [7. Deployment View](7.DeploymentView.md)
-- [8. ]()
+- [8. Crosscutting Concepts](8.CrosscuttingConcepts.md)
 - [9. Architecture Decisions (ADRs)](9.ArchitectureDecisions.md)
 - [10. Quality Requirements](10.QualityRequirements.md)
 - [11. Risks and Technical Debts](11.RisksAndTechnicalDebts.md)
