@@ -43,7 +43,7 @@ test('should create message', async ({ page }) => {
     response = await page.waitForResponse(resp => resp.url().includes('/api/message/v1/getAll') && resp.status() === 200);
 
     await expect(page).toHaveURL('/#/newsfeed');
-    await expect(page.getByText('Test+Message+for+Playwright+42')).toBeVisible();
+    await expect(page.getByText('Test Message for Playwright 42')).toBeVisible();
 });
 
 test('should not create message', async ({ page }) => {
