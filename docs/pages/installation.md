@@ -10,6 +10,7 @@
 1. **Clone the repository**
 
     ```sh
+    git config --global core.autocrlf false
     git clone https://github.com/Noah-Stud/SQS-Projekt.git
     ```
 
@@ -19,8 +20,14 @@
     cd PATH_TO_PROJECT
     ```
 
-3. **Starten Sie die Anwendung**
+3. **Bauen Sie die Anwendung**
 
     ```sh
-    docker-compose up --build
+    docker compose build
+    ```
+
+4. **Starten Sie die Anwendung**
+
+    ```sh
+    docker compose up
     ```

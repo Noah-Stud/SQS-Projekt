@@ -9,7 +9,8 @@ See the [read the docs page][readthedocs] for documentation.
 ## How to launche
 ```
 cd PATH_TO_PROJECT
-docker compose up --build
+docker compose build
+docker compose up
 ```
 
 ## License

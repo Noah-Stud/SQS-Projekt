@@ -75,7 +75,7 @@ workspace {
         component ss.sbs "Component-Backend" {
             include *
             exclude ss.sbs.jts ss.sbs.btf ss.sbs.sc
-            autoLayout tb
+            autoLayout lr
         }
 
         component ss.sbs "Component-Backend-Extra" {

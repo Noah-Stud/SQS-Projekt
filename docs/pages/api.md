@@ -93,8 +93,10 @@ and the creation of new Comments.
 - **Headers:**
     - `Authorization` (String): The JWT token in the following format: `Bearer <token>`
 - **Parameters:**
-    ```
-    Test Message'
+    ```json
+    {
+      "message": "Test Message"
+    }
     ```
 - **Response:**
   - **Status 200**

@@ -1,5 +1,5 @@
 services:
-  backend:
+  sqs-backend:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/messages
       - SPRING_DATASOURCE_USERNAME=root
