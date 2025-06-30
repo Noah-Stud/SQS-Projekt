@@ -1,6 +1,7 @@
 package com.studheupno.sqsbackend.unittest.controller;
 
 import com.studheupno.sqsbackend.controller.MessageController;
+import com.studheupno.sqsbackend.dto.MessageRequestDto;
 import com.studheupno.sqsbackend.dto.MessageResponseDto;
 import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.entity.MessageEntity;
@@ -67,7 +68,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(null);
         when(messageService.insertMessage(user.getEmail(), "Test1234")).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.insertMessage(user, "Test1234=");
+        responseObjectActual = messageController.insertMessage(user, new MessageRequestDto("Test1234"));
 
         assertNotNull(responseObjectActual);
         assertNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());
@@ -81,7 +82,7 @@ class MessageControllerTest {
         responseObjMock.setPayload(new MessageResponseDto(message));
         when(messageService.insertMessage(user.getEmail(), "Test1234")).thenReturn(responseObjMock);
 
-        responseObjectActual = messageController.insertMessage(user, "Test1234=");
+        responseObjectActual = messageController.insertMessage(user, new MessageRequestDto("Test1234"));
 
         assertNotNull(responseObjectActual);
         assertNotNull(Objects.requireNonNull(responseObjectActual.getBody()).getPayload());

@@ -120,7 +120,7 @@ public class ContainerTest {
         assertEquals(Lists.emptyList(), responseEntity.getBody().getPayload());
 
         //User does not exist -> Message not created
-        responseEntity = messageController.insertMessage(userDoesNotExist, "New message 1=");
+        responseEntity = messageController.insertMessage(userDoesNotExist, new MessageRequestDto("New message 1"));
 
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -128,7 +128,7 @@ public class ContainerTest {
         assertEquals("User with email: " + "von@mail.de" + " not found", responseEntity.getBody().getMessage());
 
         //User does exist -> Message created
-        responseEntity = messageController.insertMessage(userExist, "New message 1=");
+        responseEntity = messageController.insertMessage(userExist, new MessageRequestDto("New message 1"));
 
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

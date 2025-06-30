@@ -1,7 +1,9 @@
 package com.studheupno.sqsbackend.controller;
 
+import com.studheupno.sqsbackend.dto.MessageRequestDto;
 import com.studheupno.sqsbackend.dto.RequestResponseDto;
 import com.studheupno.sqsbackend.service.MessageService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +26,14 @@ public class MessageController {
     /**
      * Post-Request (/api/message/v1/insert) that creates a new Comment for a given messageId
      *
-     * @param userDetails    UserDetails found in jwt-Token
-     * @param messageContent String containing the messageContent
+     * @param userDetails       UserDetails found in jwt-Token
+     * @param messageRequestDto String containing the messageContent
      * @return RequestResponse
      */
     @PostMapping("/insert")
     public ResponseEntity<RequestResponseDto> insertMessage(@AuthenticationPrincipal UserDetails userDetails,
-                                                            @NotBlank @RequestBody String messageContent) {
-        messageContent = messageContent.substring(0, messageContent.length() - 1);
-        RequestResponseDto messageResponse = messageService.insertMessage(userDetails.getUsername(), messageContent);
+                                                            @Valid @RequestBody MessageRequestDto messageRequestDto) {
+        RequestResponseDto messageResponse = messageService.insertMessage(userDetails.getUsername(), messageRequestDto.getMessage());
 
         if (messageResponse.getStatus().equals("fail")) {
             return new ResponseEntity<>(messageResponse, HttpStatus.NOT_FOUND);

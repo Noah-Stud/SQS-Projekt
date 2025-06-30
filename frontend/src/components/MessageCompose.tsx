@@ -59,7 +59,9 @@ function MessageCompose() {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("psnToken"),
                 },
-                data: inputContent,
+                data: {
+                    message: inputContent
+                },
             });
 
             if (response.data !== null && response.data.status === "success") {
