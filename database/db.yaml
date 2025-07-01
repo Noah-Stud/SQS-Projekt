@@ -13,8 +13,3 @@ services:
       - type: bind
         source: ../volumes/database/init.sql
         target: /docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD", "mysql", "-u", "root", "-pmauFJcuf5dhRMQrjj", "--execute", "SHOW DATABASES;"]
-      interval: 3s
-      retries: 5
-      timeout: 5s
